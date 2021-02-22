@@ -5,3 +5,5 @@ Registrační software pro autoservis
 
 Zákazník se chce objednat do servisu, obsluha vybere datum a čas příchodu, zapíše základní atributy rezervace (jméno, příjmení etc.),
 jedná se o jednoduchý formulář bez registrace klienta. Systém kontroluje, že na den a konkrétní hodinu nejsou rezervováni víc než 2 lidé.
+
+Pro databázový server používáme XAMPP - Apache, MySQL(MariaDB)
