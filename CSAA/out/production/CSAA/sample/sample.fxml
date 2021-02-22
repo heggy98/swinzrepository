@@ -85,7 +85,6 @@
             <Button fx:id="saveButton" layoutX="25.0" layoutY="499.0" mnemonicParsing="false" onAction="#buttonUlozitAction" text="Uložit" />
             <DatePicker layoutX="229.0" layoutY="27.0" />
             <TextArea layoutX="25.0" layoutY="256.0" prefHeight="195.0" prefWidth="388.0" promptText="Závada" />
-            <Label id="ulozenoId" layoutX="122.0" layoutY="503.0" />
       </children>
     </AnchorPane>
   </children>
