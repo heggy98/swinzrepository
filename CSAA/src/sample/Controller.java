@@ -19,32 +19,32 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     @FXML
-    private TableView<reservation> table_reservations;
+    private TableView<Reservation> table_reservations;
 
     @FXML
-    private TableColumn<reservation, Integer> col_id;
+    private TableColumn<Reservation, Integer> col_id;
 
     @FXML
-    private TableColumn<reservation, String> col_name;
+    private TableColumn<Reservation, String> col_name;
 
     @FXML
-    private TableColumn<reservation, String> col_phone;
+    private TableColumn<Reservation, String> col_phone;
 
     @FXML
-    private TableColumn<reservation, String> col_spz;
+    private TableColumn<Reservation, String> col_spz;
 
     @FXML
-    private TableColumn<reservation, String> col_time;
+    private TableColumn<Reservation, String> col_time;
 
     @FXML
-    private TableColumn<reservation, Date> col_date;
+    private TableColumn<Reservation, Date> col_date;
 
     @FXML
     private void buttonUlozitAction(ActionEvent event) {
         System.out.println("tak to máš uložený no :)");
     }
 
-    ObservableList<reservation> listR;
+    ObservableList<Reservation> listR;
 
     int index = -1;
 
@@ -54,12 +54,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        col_id.setCellValueFactory(new PropertyValueFactory<reservation,Integer>("id"));
-        col_name.setCellValueFactory(new PropertyValueFactory<reservation,String>("name"));
-        col_phone.setCellValueFactory(new PropertyValueFactory<reservation,String>("phone"));
-        col_date.setCellValueFactory(new PropertyValueFactory<reservation, Date>("id"));
-        col_time.setCellValueFactory(new PropertyValueFactory<reservation,String>("id"));
-        col_spz.setCellValueFactory(new PropertyValueFactory<reservation,String>("spz"));
+        col_id.setCellValueFactory(new PropertyValueFactory<Reservation,Integer>("id"));
+        col_name.setCellValueFactory(new PropertyValueFactory<Reservation,String>("name"));
+        col_phone.setCellValueFactory(new PropertyValueFactory<Reservation,String>("phone"));
+        col_date.setCellValueFactory(new PropertyValueFactory<Reservation, Date>("id"));
+        col_time.setCellValueFactory(new PropertyValueFactory<Reservation,String>("id"));
+        col_spz.setCellValueFactory(new PropertyValueFactory<Reservation,String>("spz"));
 
         listR = Database_Access.getReservations();
         table_reservations.setItems(listR);

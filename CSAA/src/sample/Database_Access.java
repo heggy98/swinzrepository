@@ -24,15 +24,15 @@ public class Database_Access {
 
     }
 
-    public static ObservableList<reservation> getReservations(){
+    public static ObservableList<Reservation> getReservations(){
         Connection conn = ConnectDb();
-        ObservableList<reservation> list = FXCollections.observableArrayList();
+        ObservableList<Reservation> list = FXCollections.observableArrayList();
         try {
             PreparedStatement statement = conn.prepareStatement("select * from reserve_test");
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()){
-                list.add(new reservation(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("phone"), rs.getString("spz"), rs.getString("time"),rs.getDate("date")));
+                list.add(new Reservation(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("phone"), rs.getString("spz"), rs.getString("time"),rs.getDate("date")));
             }
         } catch (Exception e) {
         }

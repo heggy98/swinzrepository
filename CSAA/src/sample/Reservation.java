@@ -4,7 +4,7 @@ import javafx.fxml.Initializable;
 
 import java.util.Date;
 
-public class reservation {
+public class Reservation {
     int id;
     String name;
     String phone;
@@ -12,7 +12,7 @@ public class reservation {
     String time;
     Date date;
 
-    public reservation(int id, String name, String phone, String spz, String time, Date date) {
+    public Reservation(int id, String name, String phone, String spz, String time, Date date) {
         this.id = id;
         this.name = name;
         this.phone = phone;
