@@ -1062,7 +1062,27 @@
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="337" parent="334" name="PRIMARY">
+    <column id="337" parent="334" name="phone">
+      <Position>3</Position>
+      <DataType>varchar(12)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="338" parent="334" name="spz">
+      <Position>4</Position>
+      <DataType>varchar(7)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="339" parent="334" name="time">
+      <Position>5</Position>
+      <DataType>varchar(5)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="340" parent="334" name="date">
+      <Position>6</Position>
+      <DataType>date|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="341" parent="334" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
