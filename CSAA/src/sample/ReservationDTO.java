@@ -1,5 +1,7 @@
 package sample;
 
+import java.time.LocalDate;
+
 public class ReservationDTO {
     private int id;
     private String name;

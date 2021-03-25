@@ -36,31 +36,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReservationController">
+<TabPane fx:id="tabs" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReservationController">
   <tabs>
-    <Tab text="Nová objednávka">
+    <Tab fx:id="tab_new" text="Nová objednávka">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="617.0">
                <children>
-                  <TextField layoutX="14.0" layoutY="31.0" fx:id="tf_name" />
-                  <TextField layoutX="14.0" layoutY="82.0" fx:id="tf_phone" />
-                  <TextField layoutX="14.0" layoutY="136.0" fx:id="tf_spz" />
-                  <DatePicker layoutX="14.0" layoutY="188.0" fx:id="dp_date" />
-                  <Label layoutX="14.0" layoutY="14.0" text="Jmeno a přijmení" />
-                  <Label layoutX="14.0" layoutY="65.0" text="Telefonní číslo" />
-                  <Label layoutX="14.0" layoutY="119.0" text="SPZ vozu" />
-                  <Label layoutX="12.0" layoutY="171.0" text="Datum objednávky" />
-                  <Button layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#createReservation" text="Vytvořit objednavku" />
-                  <ChoiceBox layoutX="14.0" layoutY="242.0" prefWidth="150.0" fx:id="timeChoiceBox" />
-                  <Label layoutX="14.0" layoutY="225.0" text="Čas" />
+                   <Label layoutX="14.0" layoutY="15.0" text="Jmeno a přijmení" />
+                  <TextField fx:id="tf_name" layoutX="14.0" layoutY="45.0" onKeyTyped="#checkCreate" />
+                   <Label layoutX="14.0" layoutY="75.0" text="Telefonní číslo" />
+                  <TextField fx:id="tf_phone" layoutX="14.0" layoutY="105.0" onKeyTyped="#checkCreate" />
+                   <Label layoutX="14.0" layoutY="135.0" text="SPZ vozu" />
+                  <TextField fx:id="tf_spz" layoutX="14.0" layoutY="165.0" onKeyTyped="#checkCreate" />
+                   <Label layoutX="14.0" layoutY="195.0" text="Datum objednávky" />
+                  <DatePicker fx:id="dp_date" layoutX="14.0" layoutY="225.0" onAction="#checkCreate" onKeyTyped="#checkCreate" />
+                   <Label layoutX="14.0" layoutY="255.0" text="Čas" />
+                   <ChoiceBox fx:id="timeChoiceBox" layoutX="14.0" layoutY="285.0" onAction="#checkCreate" prefWidth="150.0" />
+                  <Button fx:id="createButton" disable="true" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#createReservation" text="Vytvořit objednavku" visible="false" />
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Přehled objednávek">
+    <Tab fx:id="tab_table" text="Přehled objednávek">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="table_reservations" layoutX="14.0" layoutY="14.0" prefHeight="354.0" prefWidth="578.0">
+                  <TableView fx:id="table_reservations" layoutX="14.0" layoutY="14.0" onMouseClicked="#getSelectedReservation" prefHeight="354.0" prefWidth="578.0">
                     <columns>
                       <TableColumn fx:id="col_id" prefWidth="42.0" text="ID" />
                       <TableColumn fx:id="col_name" prefWidth="144.0" text="Name" />
@@ -73,6 +73,24 @@
                </children></AnchorPane>
       </content>
     </Tab>
+      <Tab fx:id="tab_edit" disable="true" onSelectionChanged="#fillEditFields" text="Upravit objednávku">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                   <Label layoutX="14.0" layoutY="15.0" text="Jmeno a přijmení" />
+                   <TextField fx:id="tf_name_edit" layoutX="14.0" layoutY="45.0" onKeyTyped="#checkEdit" />
+                   <Label layoutX="14.0" layoutY="75.0" text="Telefonní číslo" />
+                   <TextField fx:id="tf_phone_edit" layoutX="14.0" layoutY="105.0" onKeyTyped="#checkEdit" />
+                   <Label layoutX="14.0" layoutY="135.0" text="SPZ vozu" />
+                   <TextField fx:id="tf_spz_edit" layoutX="14.0" layoutY="165.0" onKeyTyped="#checkEdit" />
+                   <Label layoutX="14.0" layoutY="195.0" text="Datum objednávky" />
+                   <DatePicker fx:id="dp_date_edit" layoutX="14.0" layoutY="225.0" onAction="#checkEdit" onKeyTyped="#checkEdit" />
+                   <Label layoutX="14.0" layoutY="255.0" text="Čas" />
+                   <ChoiceBox fx:id="timeChoiceBox_edit" layoutX="14.0" layoutY="285.0" onAction="#checkEdit" prefWidth="150.0" />
+                   <Button fx:id="editButton" disable="true" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#editReservation" text="Upravit objednavku" visible="false" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
   </tabs>
    <stylesheets>
       <URL value="@style.css" />

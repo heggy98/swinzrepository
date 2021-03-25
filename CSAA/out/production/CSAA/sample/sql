@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Čtv 25. bře 2021, 17:21
+-- Vytvořeno: Čtv 25. bře 2021, 18:41
 -- Verze serveru: 10.4.17-MariaDB
 -- Verze PHP: 8.0.2
 
@@ -32,7 +32,7 @@ CREATE TABLE `reserve_test` (
   `name` varchar(30) COLLATE utf8mb4_czech_ci NOT NULL,
   `phone` varchar(12) COLLATE utf8mb4_czech_ci NOT NULL,
   `spz` varchar(8) COLLATE utf8mb4_czech_ci NOT NULL,
-  `timeIndex` int(8) NOT NULL,
+  `timeIndex` int(11) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
@@ -42,7 +42,8 @@ CREATE TABLE `reserve_test` (
 
 INSERT INTO `reserve_test` (`id`, `name`, `phone`, `spz`, `timeIndex`, `date`) VALUES
 (1, 'Dominik Heger', '735071251', '1H2 2456', 0, '2021-03-01'),
-(2, 'Marian Macura', '123456789', '1H2 2456', 2, '2021-03-01');
+(2, 'Marian Macura', '123456789', '1H2 2456', 2, '2021-03-01'),
+(8, 'Janica', 'Opica', '4561289', 2, '2021-03-09');
 
 --
 -- Klíče pro exportované tabulky
@@ -62,7 +63,7 @@ ALTER TABLE `reserve_test`
 -- AUTO_INCREMENT pro tabulku `reserve_test`
 --
 ALTER TABLE `reserve_test`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

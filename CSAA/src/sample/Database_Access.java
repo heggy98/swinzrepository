@@ -46,6 +46,32 @@ public class Database_Access {
         return list;
     }
 
+    public static void updateReservation(Reservation reservation){
+        Connection conn = ConnectDb();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sql = String.format("UPDATE reserve_test " +
+                                    "SET name = '%s', phone = '%s', spz = '%s', timeIndex = '%s', date = '%s'" +
+                                    "WHERE id = %s",
+                                        reservation.getName(),
+                                        reservation.getPhone(),
+                                        reservation.getSpz(),
+                                        reservation.getTimeIndex(),
+                                        sdf.format(reservation.getDate()),
+                                        reservation.getId());
+
+        System.out.println(sql);
+
+        try{
+            assert conn != null;
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public static void AddNewReservation(Reservation reservation){
         Connection conn = ConnectDb();
 

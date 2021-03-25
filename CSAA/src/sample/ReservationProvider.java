@@ -53,4 +53,20 @@ public class ReservationProvider {
 
         Database_Access.AddNewReservation(reservation);
     }
+
+    public static void EditReservation (int id, String name, String phone, String spz, DatePicker datePicker, String time){
+        LocalDate localDate = datePicker.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault())); //
+        Date date = Date.from(instant);
+
+        Reservation reservation = new Reservation(
+                id,
+                name,
+                phone,
+                spz,
+                date,
+                TimeIndex.GetIndex(time));
+
+        Database_Access.updateReservation(reservation);
+    }
 }
