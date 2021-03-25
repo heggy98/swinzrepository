@@ -11,12 +11,17 @@
     -fx-background-color: #383838;
 
 }
-
-
-
-. text-field{
+.choice-box {
     -fx-background-color:#383838;
+}
 
+.choice-box .context-menu{
+    -fx-background-color:#383838;
+}
+
+.text-field{
+    -fx-background-color:#383838;
+    -fx-text-fill: white;
 }
 
 
@@ -36,3 +41,12 @@
     -fx-text-fill: white;
 
 }
+
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: #585858;
+}
+
+.table-view .column-header {
+    -fx-background-color:  #585858;
+}
+

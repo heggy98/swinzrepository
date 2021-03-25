@@ -5,18 +5,16 @@ import javafx.collections.ObservableList;
 
 import javax.swing.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 
 public class Database_Access {
 
-    Connection conn = null;
 
     public static Connection ConnectDb(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/csaa_database","root","");
-            // JOptionPane.showMessageDialog(null, "Connection Established");
-            return conn;
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/csaa_database","root","");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
@@ -28,15 +26,48 @@ public class Database_Access {
         Connection conn = ConnectDb();
         ObservableList<Reservation> list = FXCollections.observableArrayList();
         try {
+            assert conn != null;
             PreparedStatement statement = conn.prepareStatement("select * from reserve_test");
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()){
-                list.add(new Reservation(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("phone"), rs.getString("spz"), rs.getString("time"),rs.getDate("date")));
+                Reservation reservation = new Reservation(
+                        Integer.parseInt(rs.getString("id")),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("spz"),
+                        rs.getDate("date"),
+                        Integer.parseInt(rs.getString("timeIndex")));
+                list.add(reservation);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }
 
+    public static void AddNewReservation(Reservation reservation){
+        Connection conn = ConnectDb();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sql = String.format("INSERT INTO reserve_test (name, phone, spz, timeIndex, date) " +
+                                    "VALUES ('%s', '%s', '%s', '%s', '%s')",
+                                        reservation.getName(),
+                                        reservation.getPhone(),
+                                        reservation.getSpz(),
+                                        reservation.getTimeIndex(),
+                                        sdf.format(reservation.getDate()));
+
+        System.out.println(sql);
+
+        try{
+            assert conn != null;
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 }

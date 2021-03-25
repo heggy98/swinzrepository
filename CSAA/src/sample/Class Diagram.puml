@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class ReservationController {
+void CreateReservation(Reservation res)
+void UpdateReservation(Reservation res)
+void DeleteReservation(Reservation res)
+}
+
+ReservationProvider --> ReservationTable
+ReservationController --> ReservationProvider
+ReservationProvider --> ReservationService
+ReservationProvider --> Reservation
+ReservationService --> Reservation
+ReservationTable --> Reservation
+
+class Reservation {
+- int id;
+- String name;
+- String phone;
+- String spz;
+- int timeIndex;
+- Date date;
+
+ctor(String name, String phone, String spz, int timeIndex, Date date)
+}
+
+class ReservationTable {
+Array<Reservation> reservations;
+}
+
+ReservationService --> DbContext
+
+class DbContext {
+String ip;
+int port;
+String database;
+String password;
+void connectToDb();
+String RequestFromDb(String command);
+void DissconectFromDb();
+}
+
+class ReservationProvider{
+- ReservationTable reservationTable;
+void editReservation(Reservation res)
+Reservation filterReservation(string filter)
+void addNewReservation(String name, String phone, String spz, int timeIndex, Date date)
+}
+
+class ReservationService{
+Reservation getReservation(int reservationId)
+Reservation getAllReservations()
+void updateReservation(Reservation res)
+}
+
+
+
+
+@enduml
