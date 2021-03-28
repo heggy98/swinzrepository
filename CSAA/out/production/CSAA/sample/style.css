@@ -13,10 +13,24 @@
 }
 .choice-box {
     -fx-background-color:#383838;
+    -fx-cursor: pointer;
 }
 
 .choice-box .context-menu{
     -fx-background-color:#383838;
+}
+
+.date-picker{-fx-border-width: 0;
+    -fx-border-color: white;
+    -fx-background-color: #2a3143;
+    -fx-text-fill: #F7F0F5;
+}
+
+.createbutton{
+    -fx-background-color: #3f4862;
+    -fx-text-fill: #F7F0F5;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
 }
 
 .text-field,.choice-box{-fx-border-width: 0 0 1 0;
@@ -25,6 +39,16 @@
     -fx-text-fill: #F7F0F5;
 }
 
+.text-field:focused,.choice-box:focused{
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+    -fx-background-color: #232939;
+}
+
+.date-picker:focused{
+    -fx-border-color: white;
+    -fx-background-color: #232939;
+}
 
 .tab-label{-fx-text-fill: #F7F0F5;
 }
@@ -38,10 +62,12 @@
 
 }
 
+
+
 .tab:selected{
+    -fx-border-width: 0;
     -fx-background-color: #343d53;
     -fx-text-fill: #F7F0F5;
-
 }
 
 .date-picker-popup > .month-year-pane {
@@ -52,10 +78,9 @@
     -fx-background-color:  #252e3e;
 }
 
-.date-picker:focused > .text-field,
-.date-picker > .text-field:focused{
-    -fx-border-width: 0;
-}
+
+
+
 
 .date-picker > .arrow-button {
     -fx-background-color: #36445b;
