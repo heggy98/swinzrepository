@@ -56,6 +56,8 @@ public class ReservationController implements Initializable {
         tf_name.setText("");
         tf_phone.setText("");
         tf_spz.setText("");
+        dp_date.setValue(null);
+        timeChoiceBox.setValue(null);
     }
 
     @Override
@@ -114,6 +116,7 @@ public class ReservationController implements Initializable {
             tab_edit.setDisable(false);
         }
     }
+
 
     @FXML
     public void fillEditFields(){
