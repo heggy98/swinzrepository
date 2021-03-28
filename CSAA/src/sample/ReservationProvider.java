@@ -3,6 +3,8 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
+
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -15,8 +17,16 @@ public class ReservationProvider {
         return ConvertReservationsToDto(reservations);
     }
 
-    public static Reservation GetReservation(int id){
-        return Database_Access.getReservation(id);
+    public static Reservation GetReservation(int id) throws SQLException {
+
+        Reservation res = null;
+
+        try{
+            res = Database_Access.getReservation(id);
+        }catch (SQLException e){
+            throw e;
+        }
+        return res;
     }
 
     private static ObservableList<ReservationDTO> ConvertReservationsToDto(ObservableList<Reservation> reservations){

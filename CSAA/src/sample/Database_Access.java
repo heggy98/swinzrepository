@@ -46,12 +46,11 @@ public class Database_Access {
         return list;
     }
 
-    public static Reservation getReservation(int id){
+    public static Reservation getReservation(int id) throws SQLException {
         Reservation reservation = null;
 
         try {
             Connection conn = ConnectDb();
-            assert conn != null;
             String sql = String.format("select * from reserve_test where id = %s", id);
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -71,6 +70,7 @@ public class Database_Access {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
 
         return reservation;
