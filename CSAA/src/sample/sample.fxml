@@ -35,7 +35,6 @@
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <TabPane fx:id="tabs" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReservationController">
   <tabs>
@@ -43,30 +42,15 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="617.0">
                <children>
-                   <Label layoutX="34.0" layoutY="28.0" text="Jméno a přijmení">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
+                   <Label layoutX="34.0" layoutY="28.0" text="Jméno a přijmení" />
                   <TextField fx:id="tf_name" layoutX="34.0" layoutY="50.0" onKeyTyped="#checkCreate" style="-fx-background-color: 0D1321;" />
-                   <Label layoutX="34.0" layoutY="90.0" text="Telefonní číslo">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
+                   <Label layoutX="34.0" layoutY="90.0" text="Telefonní číslo" />
                   <TextField fx:id="tf_phone" layoutX="34.0" layoutY="111.0" onKeyTyped="#checkCreate" />
-                   <Label layoutX="34.0" layoutY="148.0" text="SPZ vozu">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
+                   <Label layoutX="34.0" layoutY="148.0" text="SPZ vozu" />
                   <TextField fx:id="tf_spz" layoutX="34.0" layoutY="168.0" onKeyTyped="#checkCreate" />
-                   <Label layoutX="342.0" layoutY="90.0" text="Datum ">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
+                   <Label layoutX="342.0" layoutY="90.0" text="Datum " />
                   <DatePicker fx:id="dp_date" layoutX="343.0" layoutY="111.0" onAction="#checkCreate" onKeyTyped="#checkCreate" />
-                   <Label layoutX="343.0" layoutY="28.0" text="Čas">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
+                   <Label layoutX="343.0" layoutY="28.0" text="Čas" />
                    <ChoiceBox fx:id="timeChoiceBox" layoutX="343.0" layoutY="50.0" onAction="#checkCreate" prefWidth="150.0" />
                   <Button fx:id="createButton" disable="true" layoutX="14.0" layoutY="330.0" mnemonicParsing="false" onAction="#createReservation" text="Vytvořit objednavku" visible="false" />
                </children></AnchorPane>

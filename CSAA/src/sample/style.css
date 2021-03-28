@@ -32,7 +32,7 @@
 .tab{
     -fx-border-width: 0;
     -fx-font-family: Arial;
-    -fx-background-color: #3d4760;
+    -fx-background-color: #444c67;
     -fx-font-weight: bold;
     -fx-font-size: 16;
 
@@ -49,6 +49,12 @@
 }
 
 .table-view .column-header {
-    -fx-background-color:  #585858;
+    -fx-background-color:  #252e3e;
+}
+
+
+
+.date-picker > .arrow-button {
+    -fx-background-color: #36445b;
 }
 
