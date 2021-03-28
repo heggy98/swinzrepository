@@ -1,14 +1,14 @@
 .root{
-    -fx-background-color: #585858;
+    -fx-background-color: #2d3447;
 }
 
 .label{
-    -fx-text-fill: white;
+    -fx-text-fill: #F7F0F5;
     -fx-font-weight: bold;
 }
 
 .tab-header-background{
-    -fx-background-color: #383838;
+    -fx-background-color: #252e3e;
 
 }
 .choice-box {
@@ -19,26 +19,28 @@
     -fx-background-color:#383838;
 }
 
-.text-field{
-    -fx-background-color:#383838;
-    -fx-text-fill: white;
+.text-field,.choice-box{-fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+    -fx-background-color: #2a3143;
+    -fx-text-fill: #F7F0F5;
 }
 
 
-.tab-label{-fx-text-fill: white;}
+.tab-label{-fx-text-fill: #F7F0F5;
+}
 
 .tab{
     -fx-border-width: 0;
     -fx-font-family: Arial;
-    -fx-background-color:#858585;
+    -fx-background-color: #3d4760;
     -fx-font-weight: bold;
     -fx-font-size: 16;
 
 }
 
 .tab:selected{
-    -fx-background-color: #585858;
-    -fx-text-fill: white;
+    -fx-background-color: #343d53;
+    -fx-text-fill: #F7F0F5;
 
 }
 
