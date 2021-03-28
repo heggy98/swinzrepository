@@ -46,6 +46,36 @@ public class Database_Access {
         return list;
     }
 
+    public static Reservation getReservation(int id){
+        Reservation reservation = null;
+
+        try {
+            Connection conn = ConnectDb();
+            assert conn != null;
+            String sql = String.format("select * from reserve_test where id = %s", id);
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if(rs.next()){
+                reservation = new Reservation(
+                        Integer.parseInt(rs.getString("id")),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("spz"),
+                        rs.getDate("date"),
+                        Integer.parseInt(rs.getString("timeIndex")));
+            }
+            else{
+                throw new SQLException("No reservation was found!");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reservation;
+    }
+
     public static void updateReservation(Reservation reservation){
         Connection conn = ConnectDb();
 

@@ -15,6 +15,10 @@ public class ReservationProvider {
         return ConvertReservationsToDto(reservations);
     }
 
+    public static Reservation GetReservation(int id){
+        return Database_Access.getReservation(id);
+    }
+
     private static ObservableList<ReservationDTO> ConvertReservationsToDto(ObservableList<Reservation> reservations){
         ArrayList<ReservationDTO> reservationsDTOs = new ArrayList<>();
 

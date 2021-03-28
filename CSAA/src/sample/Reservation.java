@@ -1,7 +1,5 @@
 package sample;
-
-import javafx.fxml.Initializable;
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Reservation {
@@ -14,12 +12,17 @@ public class Reservation {
 
     @Override
     public String toString() {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateString = format.format(date);
+
         return "Reservation{" +
                 "name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", spz='" + spz + '\'' +
                 ", timeIndex=" + timeIndex +
-                ", date=" + date +
+                ", date=" + dateString +
                 '}';
     }
 

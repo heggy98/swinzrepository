@@ -22,6 +22,22 @@ public class TimeIndexTests {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
+    @Test
+    public void GetTimeString(){
+        int input = 1;
+        String expectedResult = "09:00";
+        String actualResult = TimeIndex.hours.get(input);
 
+        Assert.assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void GetTimeString_Wrong(){
+        int input = 1;
+        String expectedResult = "10:00";
+        String actualResult = TimeIndex.hours.get(input);
+
+        Assert.assertEquals(expectedResult, actualResult);
+    }
 
 }
