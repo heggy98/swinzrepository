@@ -47,8 +47,15 @@ public class ReservationController implements Initializable {
     @FXML
     private void createReservation() {
         ReservationProvider.CreateReservation(tf_name.getText(), tf_phone.getText(), tf_spz.getText(), dp_date, timeChoiceBox.getValue());
+        SetCreateFieldToEmpty();
         refreshReservations();
         tabs.getSelectionModel().select(tab_table);
+    }
+
+    private void SetCreateFieldToEmpty() {
+        tf_name.setText("");
+        tf_phone.setText("");
+        tf_spz.setText("");
     }
 
     @Override

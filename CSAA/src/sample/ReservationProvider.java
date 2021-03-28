@@ -41,6 +41,8 @@ public class ReservationProvider {
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault())); //
         Date date = Date.from(instant);
 
+        // if
+
         Reservation reservation = new Reservation(
                 name,
                 phone,
@@ -52,6 +54,8 @@ public class ReservationProvider {
         System.out.println(reservation);
 
         Database_Access.AddNewReservation(reservation);
+
+        // throw new RuntimeException("ther is already ")
     }
 
     public static void EditReservation (int id, String name, String phone, String spz, DatePicker datePicker, String time){
