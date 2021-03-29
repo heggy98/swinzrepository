@@ -15,12 +15,12 @@ public class TimeIndexTests {
     }
 
     @Test
-    public void GetTimeIndex_Wrong(){
+    public void GetTimeIndex_NotEquals(){
         String input = "09:00";
         int expectedResult = 2;
         int actualResult = TimeIndex.GetIndex(input);
 
-        Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertNotEquals(expectedResult, actualResult);
     }
 
     @Test
@@ -33,12 +33,12 @@ public class TimeIndexTests {
     }
 
     @Test
-    public void GetTimeString_Wrong(){
+    public void GetTimeString_NotEquals(){
         int input = 1;
         String expectedResult = "10:00";
         String actualResult = TimeIndex.hours.get(input);
 
-        Assert.assertEquals(expectedResult, actualResult);
+        Assert.assertNotEquals(expectedResult, actualResult);
     }
 
     @Ignore
