@@ -1,4 +1,5 @@
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import sample.TimeIndex;
 
@@ -40,4 +41,13 @@ public class TimeIndexTests {
         Assert.assertEquals(expectedResult, actualResult);
     }
 
+    @Ignore
+    @Test
+    public void GetTimeString_Ignored(){
+        int input = 1;
+        String expectedResult = "09:00";
+        String actualResult = TimeIndex.hours.get(input);
+
+        Assert.assertEquals(expectedResult, actualResult);
+    }
 }

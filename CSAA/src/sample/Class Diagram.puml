@@ -1,18 +1,55 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class ReservationController {
-void CreateReservation(Reservation res)
-void UpdateReservation(Reservation res)
-void DeleteReservation(Reservation res)
+Main --> Constants
+ReservationController --> ReservationProvider
+ReservationController --> ReservationDTO
+ReservationProvider --> Reservation
+ReservationProvider --> ReservationDTO
+ReservationProvider --> TimeIndex
+ReservationProvider --> Database_Access
+
+class Main{
++ void start(Stage primaryStage)
++ void main(String[] args)
 }
 
-ReservationProvider --> ReservationTable
-ReservationController --> ReservationProvider
-ReservationProvider --> ReservationService
-ReservationProvider --> Reservation
-ReservationService --> Reservation
-ReservationTable --> Reservation
+class ReservationController {
++ ObservableList<ReservationDTO> listR
++ ReservationDTO selectedReservation
++ boolean editCheck
++ void createReservation()
++ void editReservation()
++ void deleteReservation()
++ void setCreateFieldToEmpty()
++ void initialize(URL url, ResourceBundle rb)
++ void checkCreate()
++ void setSelectedReservationToNull()
++ void getSelectedReservation()
++ void fillEditFields()
++ void checkEdit()
+- void initializeTimeChoiceBox()
+- void initializeTable()
+- refreshReservations()
+}
+
+class Constants{
++ final static String Application_Title
++ final static String FXML_URL
++ final static String ICO_URL
+}
+
+class ReservationDTO {
+- int id;
+- String name;
+- String phone;
+- String spz;
+- String timeIndex;
+- String date;
+
+ctors()
+getters / setters()
+}
 
 class Reservation {
 - int id;
@@ -22,36 +59,31 @@ class Reservation {
 - int timeIndex;
 - Date date;
 
-ctor(String name, String phone, String spz, int timeIndex, Date date)
-}
-
-class ReservationTable {
-Array<Reservation> reservations;
-}
-
-ReservationService --> DbContext
-
-class DbContext {
-String ip;
-int port;
-String database;
-String password;
-void connectToDb();
-String RequestFromDb(String command);
-void DissconectFromDb();
+ctors()
+getters / setters()
 }
 
 class ReservationProvider{
-- ReservationTable reservationTable;
-void editReservation(Reservation res)
-Reservation filterReservation(string filter)
-void addNewReservation(String name, String phone, String spz, int timeIndex, Date date)
++ ObservableList<ReservationDTO> GetAllReservations()
++ Reservation GetReservation(int id)
+- ObservableList<ReservationDTO> ConvertReservationsToDto(ObservableList<Reservation> reservations)
+- ReservationDTO ConvertReservationToDto(Reservation reservation)
++ void CreateReservation(String name, String phone, String spz, DatePicker datePicker, String time)
++ void EditReservation (int id, String name, String phone, String spz, DatePicker datePicker, String time)
 }
 
-class ReservationService{
-Reservation getReservation(int reservationId)
-Reservation getAllReservations()
-void updateReservation(Reservation res)
+
+class TimeIndex{
++ Map<Integer, String> hours;
++ int GetIndex(String value)
+}
+
+class Database_Access{
++ Connection ConnectDb()
++ ObservableList<Reservation> getReservations()
++ Reservation getReservation(int id)
++ updateReservation(Reservation reservation)
++ void AddNewReservation(Reservation reservation)
 }
 
 
