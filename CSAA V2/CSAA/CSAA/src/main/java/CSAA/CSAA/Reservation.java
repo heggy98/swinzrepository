@@ -9,11 +9,11 @@ import java.util.Date;
 @Entity
 public class Reservation {
     private @Id @GeneratedValue Long id;
-    private String name;
-    private String phone;
-    private String spz;
-    private Integer timeIndex;
-    private Date date;
+    public String name;
+    public String phone;
+    public String spz;
+    public Integer timeIndex;
+    public Date date;
 
     public Reservation() {
     }

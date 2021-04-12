@@ -1,9 +1,9 @@
 package CSAA.CSAA;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller // <1>
+@RestController // <1>
 public class HomeController {
 
     @RequestMapping(value = "/") // <2>
