@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Card, Col, Form} from "react-bootstrap";
+import axios from 'axios';
 
 export default class ReservationList extends Component {
 
@@ -10,9 +11,24 @@ export default class ReservationList extends Component {
         this.submitReservation = this.submitReservation.bind(this);
     }
 
-    submitReservation(event){
+    submitReservation = event => {
         alert("Name: " + this.state.name + " Phone: " + this.state.phone + " Spz: " + this.state.spz + " Date: " + this.state.date + " Time: " + this.state.time);
         event.preventDefault();
+
+        const reservation = {
+            name: this.state.name,
+            Phone: this.state.phone,
+            Spz: this.state.spz,
+            Date: this.state.date,
+            Time: this.state.time
+        };
+
+        axios.post("http://localhost:8080/reservations", reservation)
+            .then(response => {
+                if(response.data != null){
+                    alert("Reservation submitted");
+                }
+            })
     }
 
     reservationChange(event){
@@ -22,6 +38,8 @@ export default class ReservationList extends Component {
     }
 
     render(){
+        const {name, phone, spz, date, time} = this.state;
+
         return (
          <Card className={"border border-dark bg-dark text-white"}>
              <Card.Header>Add reservation</Card.Header>
@@ -33,7 +51,7 @@ export default class ReservationList extends Component {
                              <Form.Control required
                                            name="name"
                                            type="name"
-                                           value={this.state.name}
+                                           value={name}
                                            onChange={this.reservationChange}
                                            placeholder="Enter name" />
                          </Form.Group>
@@ -43,7 +61,7 @@ export default class ReservationList extends Component {
                              <Form.Control required
                                            name="phone"
                                            type="tel"
-                                           value={this.state.phone}
+                                           value={phone}
                                            onChange={this.reservationChange}
                                            placeholder="Enter telephone" />
                          </Form.Group>
@@ -53,7 +71,7 @@ export default class ReservationList extends Component {
                              <Form.Control required
                                            name="spz"
                                            type="name"
-                                           value={this.state.spz}
+                                           value={spz}
                                            onChange={this.reservationChange}
                                            placeholder="Enter spz" />
                          </Form.Group>
@@ -63,7 +81,7 @@ export default class ReservationList extends Component {
                              <Form.Control required
                                            name="date"
                                            type="date"
-                                           value={this.state.date}
+                                           value={date}
                                            onChange={this.reservationChange}
                                            placeholder="Date" />
                          </Form.Group>
@@ -73,7 +91,7 @@ export default class ReservationList extends Component {
                              <Form.Control required
                                            name="time"
                                            type="time"
-                                           value={this.state.time}
+                                           value={time}
                                            onChange={this.reservationChange}
                                            label="Time" />
                          </Form.Group>

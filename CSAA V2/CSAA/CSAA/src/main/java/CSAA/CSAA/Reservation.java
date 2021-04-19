@@ -51,4 +51,44 @@ public class Reservation {
     public Long getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSpz() {
+        return spz;
+    }
+
+    public void setSpz(String spz) {
+        this.spz = spz;
+    }
+
+    public Integer getTimeIndex() {
+        return timeIndex;
+    }
+
+    public void setTimeIndex(Integer timeIndex) {
+        this.timeIndex = timeIndex;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }
