@@ -2,6 +2,7 @@ package CSAA.CSAA;
 
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -31,28 +32,32 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Collection<Reservation> findAll() {
-        return reservationMap.values();
+        return DataSourceConfig.getReservations();
     }
 
     @Override
     public Reservation findById(Long id) {
-        return reservationMap.get(id);
+        try {
+            return DataSourceConfig.getReservation(id);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public Reservation save(Reservation reservation) {
-        Long newReservationId = ++reservationId;
-        reservation.setId(newReservationId);
-        reservationMap.put(newReservationId, reservation);
-        return reservationMap.get(newReservationId);
+        return DataSourceConfig.AddNewReservation(reservation);
     }
 
     @Override
     public Reservation update(Reservation reservation) {
-        reservationId = reservation.getId();
-        if(reservationMap.get(reservationId) != null){
-            reservationMap.put(reservationId, reservation);
-            return reservationMap.get(reservationId);
+        try {
+            if(DataSourceConfig.getReservation(reservation.getId()) != null){
+                return DataSourceConfig.updateReservation(reservation);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
         return null;
     }

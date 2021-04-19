@@ -26,6 +26,15 @@ public class Reservation {
         this.date = date;
     }
 
+    public Reservation(long id, String name, String phone, String spz, Date date, int timeIndex) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.spz = spz;
+        this.timeIndex = timeIndex;
+        this.date = date;
+    }
+
     @Override
     public String toString() {
 
