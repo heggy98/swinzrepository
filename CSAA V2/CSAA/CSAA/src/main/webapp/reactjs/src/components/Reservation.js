@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export default class ReservationList extends Component {
 
-
     constructor(props) {
         super(props);
         this.state = {name: '', spz: '', phone: '', date: '', time: '', times: []};
@@ -50,6 +49,19 @@ export default class ReservationList extends Component {
             });
     }
 
+    getFreeTimeIndexesByDate() {
+
+        axios.get("http://localhost:8080/times/")
+            .then(response => response.data)
+            .then((data) => {
+                if (data != null) {
+                    this.setState({times : data});
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 
     reservationChange(event) {
         this.setState({

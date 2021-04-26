@@ -79,8 +79,12 @@ public class ReservationService implements IReservationService {
             e.printStackTrace();
         }
 
+        if(reservationDTO.timeIndex != 0){
+            reservationDTO.time = reservationDTO.timeIndex;
+        }
+
         return new Reservation(
-                reservationDTO.getId(),
+                0,
                 reservationDTO.name,
                 reservationDTO.phone,
                 reservationDTO.spz,

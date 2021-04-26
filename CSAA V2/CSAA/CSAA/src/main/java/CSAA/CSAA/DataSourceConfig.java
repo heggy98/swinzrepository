@@ -149,7 +149,17 @@ public class DataSourceConfig {
         try {
             assert conn != null;
             Statement statement = conn.createStatement();
-            statement.executeUpdate(sql);
+            statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    reservation.setId(generatedKeys.getLong(1));
+                }
+                else {
+                    throw new SQLException("Creating reservation failed, no ID obtained.");
+                }
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -167,7 +177,7 @@ public class DataSourceConfig {
 
         try {
             Connection conn = ConnectDb();
-            String sql = String.format("select * from reserve_test where date = %s", formattedDate);
+            String sql = String.format("select * from reserve_test where date = '%s'", formattedDate);
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 

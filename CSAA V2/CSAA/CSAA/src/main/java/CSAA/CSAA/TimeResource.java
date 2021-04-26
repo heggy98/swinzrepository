@@ -1,11 +1,10 @@
 package CSAA.CSAA;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +14,34 @@ import java.util.Map;
 public class TimeResource {
 
     @GetMapping
-    public Object findAll(){
+    public Object findAll() {
         return TimeIndex.GetValues();
+    }
+
+    @ResponseBody
+    @RequestMapping("/byDate")
+    @GetMapping
+    public Object getByDate(@RequestParam String date) {
+
+        Date sdf = null;
+
+        try {
+            sdf = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        var reservations = DataSourceConfig.GetByDate(sdf);
+        var mapTimeIndex = TimeIndex.hours;
+
+        Map<Integer, String> hours = new HashMap<>();
+
+        for (var timeIndex : mapTimeIndex.keySet()) {
+            if (reservations.stream().filter(x -> x.getTimeIndex() == timeIndex).count() < 2) {
+                hours.put(timeIndex, TimeIndex.hours.get(timeIndex));
+            }
+        }
+
+        return hours.values().toArray();
     }
 }

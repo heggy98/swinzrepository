@@ -14,6 +14,7 @@ public class ReservationDTO {
     public String spz;
     public int time;
     public String date;
+    public int timeIndex;
 
     public ReservationDTO() {
     }
