@@ -21,10 +21,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class DataSourceConfig {
 
 
-    public static Connection ConnectDb(){
+    public static Connection ConnectDb() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/csaa_database","root","");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/csaa_database", "root", "");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
@@ -33,7 +33,7 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public DataSource getDataSource(){
+    public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
         dataSourceBuilder.url("jdbc:mysql://localhost:3306/csaa_database");
@@ -42,7 +42,7 @@ public class DataSourceConfig {
         return dataSourceBuilder.build();
     }
 
-    public static Collection<Reservation> getReservations(){
+    public static Collection<Reservation> getReservations() {
         Connection conn = ConnectDb();
         Collection<Reservation> reservationMap = new ArrayList<>();
         try {
@@ -50,7 +50,7 @@ public class DataSourceConfig {
             PreparedStatement statement = conn.prepareStatement("select * from reserve_test");
             ResultSet rs = statement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 Reservation reservation = new Reservation(
                         Integer.parseInt(rs.getString("id")),
                         rs.getString("name"),
@@ -79,7 +79,7 @@ public class DataSourceConfig {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
-            if(rs.next()){
+            if (rs.next()) {
                 reservation = new Reservation(
                         Integer.parseInt(rs.getString("id")),
                         rs.getString("name"),
@@ -87,8 +87,7 @@ public class DataSourceConfig {
                         rs.getString("spz"),
                         rs.getDate("date"),
                         Integer.parseInt(rs.getString("timeIndex")));
-            }
-            else{
+            } else {
                 throw new SQLException("No reservation was found!");
             }
 
@@ -100,24 +99,24 @@ public class DataSourceConfig {
         return reservation;
     }
 
-    public static Reservation updateReservation(Reservation reservation){
+    public static Reservation updateReservation(Reservation reservation) {
         Connection conn = ConnectDb();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 
         String sql = String.format("UPDATE reserve_test " +
-                                    "SET name = '%s', phone = '%s', spz = '%s', timeIndex = '%s', date = '%s'" +
-                                    "WHERE id = %s",
-                                        reservation.getName(),
-                                        reservation.getPhone(),
-                                        reservation.getSpz(),
-                                        reservation.getTimeIndex(),
-                                        sdf.format(reservation.getDate()),
-                                        reservation.getId());
+                        "SET name = '%s', phone = '%s', spz = '%s', timeIndex = '%s', date = '%s'" +
+                        "WHERE id = %s",
+                reservation.getName(),
+                reservation.getPhone(),
+                reservation.getSpz(),
+                reservation.getTimeIndex(),
+                reservation.getDate(),
+                reservation.getId());
 
         System.out.println(sql);
 
-        try{
+        try {
             assert conn != null;
             Statement statement = conn.createStatement();
             statement.executeUpdate(sql);
@@ -128,22 +127,30 @@ public class DataSourceConfig {
         return reservation;
     }
 
-    public static Reservation AddNewReservation(Reservation reservation){
+    public static Reservation AddNewReservation(Reservation reservation) {
         Connection conn = ConnectDb();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+        System.out.println("Sent date: " + reservation.getDate());
+
+        var formattedDate = sdf.format(reservation.getDate());
+
+        System.out.println("Formatted date: " + formattedDate);
+
+        System.out.println("Sent timeindex : " + reservation.getTimeIndex());
+
         String sql = String.format("INSERT INTO reserve_test (name, phone, spz, timeIndex, date) " +
-                                    "VALUES ('%s', '%s', '%s', '%s', '%s')",
-                                        reservation.getName(),
-                                        reservation.getPhone(),
-                                        reservation.getSpz(),
-                                        reservation.getTimeIndex(),
-                                        sdf.format(reservation.getDate()));
+                        "VALUES ('%s', '%s', '%s', '%s', '%s')",
+                reservation.getName(),
+                reservation.getPhone(),
+                reservation.getSpz(),
+                reservation.getTimeIndex(),
+                formattedDate);
 
         System.out.println(sql);
 
-        try{
+        try {
             assert conn != null;
             Statement statement = conn.createStatement();
             statement.executeUpdate(sql);

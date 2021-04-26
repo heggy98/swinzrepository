@@ -12,16 +12,18 @@ export default class ReservationList extends Component {
     }
 
     submitReservation = event => {
-        
+
+        debugger;
         alert("Name: " + this.state.name + " Phone: " + this.state.phone + " Spz: " + this.state.spz + " Date: " + this.state.date + " Time: " + this.state.time);
         event.preventDefault();
 
         const reservation = {
+            id: 0,
             name: this.state.name,
-            Phone: this.state.phone,
-            Spz: this.state.spz,
-            Date: this.state.date,
-            Time: this.state.time
+            phone: this.state.phone,
+            spz: this.state.spz,
+            date: this.state.date,
+            time: this.state.time
         };
 
         axios.post("http://localhost:8080/reservations", reservation)

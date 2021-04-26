@@ -25,8 +25,8 @@ public class ReservationResource {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Reservation save(@RequestBody Reservation reservation){
-        return reservationService.save(reservation);
+    public Reservation save(@RequestBody ReservationDTO reservationDTO){
+        return reservationService.save(reservationDTO);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -38,9 +38,15 @@ public class Reservation {
     @Override
     public String toString() {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        var dateString = date.toString();
+        try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        String dateString = format.format(date);
+            dateString = format.format(date);
+        }
+        catch (Exception ex){
+
+        }
 
         return "Reservation{" +
                 "name='" + name + '\'' +

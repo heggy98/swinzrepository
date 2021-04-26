@@ -7,7 +7,7 @@ public interface IReservationService {
 
     Reservation findById(Long id);
 
-    Reservation save(Reservation reservation);
+    Reservation save(ReservationDTO reservationDTO);
 
     Reservation update(Reservation reservation);
 

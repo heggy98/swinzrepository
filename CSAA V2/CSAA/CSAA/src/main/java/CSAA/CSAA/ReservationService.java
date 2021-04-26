@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ReservationService implements IReservationService {
@@ -46,7 +44,9 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation save(Reservation reservation) {
+    public Reservation save(ReservationDTO reservationDTO) {
+
+        Reservation reservation = ParseDtoToEntity(reservationDTO);
         return DataSourceConfig.AddNewReservation(reservation);
     }
 
@@ -68,5 +68,44 @@ public class ReservationService implements IReservationService {
             return reservationMap.remove(id);
         }
         return null;
+    }
+
+    private static ArrayList<ReservationDTO> ConvertReservationsToDto(ArrayList<Reservation> reservations){
+        ArrayList<ReservationDTO> reservationsDTOs = new ArrayList<>();
+
+        for (Reservation reservation : reservations) {
+            reservationsDTOs.add(ConvertReservationToDto(reservation));
+        }
+
+        return reservationsDTOs;
+    }
+
+    private static ReservationDTO ConvertReservationToDto(Reservation reservation){
+
+        return new ReservationDTO(
+                reservation.getId(),
+                reservation.getName(),
+                reservation.getPhone(),
+                reservation.getSpz(),
+                String.valueOf(reservation.getDate()),
+                TimeIndex.hours.get(reservation.getTimeIndex()));
+    }
+
+    private static Reservation ParseDtoToEntity(ReservationDTO reservationDTO){
+
+        Date parsedDate = null;
+        try {
+            parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(reservationDTO.date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return new Reservation(
+                reservationDTO.getId(),
+                reservationDTO.name,
+                reservationDTO.phone,
+                reservationDTO.spz,
+                parsedDate,
+                0);
     }
 }
