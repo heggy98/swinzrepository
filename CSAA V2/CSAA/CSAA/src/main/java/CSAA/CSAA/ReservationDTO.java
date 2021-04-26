@@ -12,13 +12,13 @@ public class ReservationDTO {
     public String name;
     public String phone;
     public String spz;
-    public String time;
+    public int time;
     public String date;
 
     public ReservationDTO() {
     }
 
-    public ReservationDTO(Long id, String name, String phone, String spz, String date, String time) {
+    public ReservationDTO(Long id, String name, String phone, String spz, String date, int time) {
         this.id = id;
         this.name = name;
         this.phone = phone;

@@ -23,7 +23,7 @@ export default class ReservationList extends Component {
             phone: this.state.phone,
             spz: this.state.spz,
             date: this.state.date,
-            time: this.state.time
+            time: this.getTimeIndex(this.state.time)
         };
 
         axios.post("http://localhost:8080/reservations", reservation)
@@ -32,6 +32,41 @@ export default class ReservationList extends Component {
                     alert("Reservation submitted");
                 }
             })
+    }
+
+    getTimeIndex(time){
+        switch (time){
+            case "08:00":
+                return 1;
+                break;
+            case "09:00":
+                return 2;
+                break;
+            case "10:00":
+                return 3;
+                break;
+            case "11:00":
+                return 4;
+                break;
+            case "12:00":
+                return 5;
+                break;
+            case "13:00":
+                return 6;
+                break;
+            case "14:00":
+                return 7;
+                break;
+            case "15:00":
+                return 8;
+                break;
+            case "16:00":
+                return 9;
+                break;
+            default:
+                return 0;
+        }
+
     }
 
 
@@ -120,11 +155,15 @@ export default class ReservationList extends Component {
                                                    value={time}
                                                    onChange={this.reservationChange}
                                                    label="Time">
-                                         <option>1</option>
-                                         <option>2</option>
-                                         <option>3</option>
-                                         <option>4</option>
-                                         <option>5</option>
+                                         <option>08:00</option>
+                                         <option>09:00</option>
+                                         <option>10:00</option>
+                                         <option>11:00</option>
+                                         <option>12:00</option>
+                                         <option>13:00</option>
+                                         <option>14:00</option>
+                                         <option>15:00</option>
+                                         <option>16:00</option>
                                          />
                                      </Form.Control>
                                  </Form.Group>
