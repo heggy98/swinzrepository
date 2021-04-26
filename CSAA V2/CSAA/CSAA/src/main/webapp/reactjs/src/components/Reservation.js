@@ -34,6 +34,8 @@ export default class ReservationList extends Component {
             })
     }
 
+
+
     reservationChange(event){
         this.setState({
             [event.target.name]:event.target.value
@@ -60,7 +62,8 @@ export default class ReservationList extends Component {
                                                type="name"
                                                value={name}
                                                onChange={this.reservationChange}
-                                               placeholder="Vložte jméno" />
+                                               placeholder="Vložte jméno"
+                                 />
                              </InputGroup>
                          </Form.Group>
 
@@ -74,6 +77,7 @@ export default class ReservationList extends Component {
                                            type="tel"
                                            value={phone}
                                            onChange={this.reservationChange}
+
                                            placeholder="Vložte tel. číslo" />
                              </InputGroup>
                          </Form.Group>
@@ -104,15 +108,29 @@ export default class ReservationList extends Component {
                                                onChange={this.reservationChange}
                                                placeholder="Date" />
                              </Form.Group></Col>
-                             <Col><Form.Group as={Col} controlId="formTime">
 
-                                 <Form.Control required
-                                               name="time"
-                                               type="time"
-                                               value={time}
-                                               onChange={this.reservationChange}
-                                               label="Time" />
-                             </Form.Group></Col>
+
+                             <Col>
+
+                                 <Form.Group as={Col} controlId="formTime">
+                              
+                                     <Form.Control as="select" custom  required
+                                                   name="time"
+                                                   type="time"
+                                                   value={time}
+                                                   onChange={this.reservationChange}
+                                                   label="Time">
+                                         <option>1</option>
+                                         <option>2</option>
+                                         <option>3</option>
+                                         <option>4</option>
+                                         <option>5</option>
+                                         />
+                                     </Form.Control>
+                                 </Form.Group>
+
+
+                     </Col>
                          </Row>
 
 
