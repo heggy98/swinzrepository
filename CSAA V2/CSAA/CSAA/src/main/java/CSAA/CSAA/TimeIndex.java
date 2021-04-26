@@ -1,5 +1,6 @@
 package CSAA.CSAA;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,5 +29,14 @@ public class TimeIndex {
             }
         }
         throw new RuntimeException("This hour has no index!");
+    }
+
+    @Override
+    public String toString() {
+        return "tajm index is here ! ";
+    }
+
+    public static Object GetValues(){
+        return hours.values().toArray();
     }
 }

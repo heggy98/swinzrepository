@@ -13,9 +13,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
 
 @Configuration
 public class DataSourceConfig {
@@ -103,7 +100,6 @@ public class DataSourceConfig {
         Connection conn = ConnectDb();
 
 
-
         String sql = String.format("UPDATE reserve_test " +
                         "SET name = '%s', phone = '%s', spz = '%s', timeIndex = '%s', date = '%s'" +
                         "WHERE id = %s",
@@ -159,5 +155,38 @@ public class DataSourceConfig {
         }
 
         return reservation;
+    }
+
+    public static Collection<Reservation> GetByDate(java.util.Date date) {
+
+        Collection<Reservation> reservationMap = new ArrayList<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        var formattedDate = sdf.format(date);
+
+        try {
+            Connection conn = ConnectDb();
+            String sql = String.format("select * from reserve_test where date = %s", formattedDate);
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                Reservation reservation = new Reservation(
+                        Integer.parseInt(rs.getString("id")),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("spz"),
+                        rs.getDate("date"),
+                        Integer.parseInt(rs.getString("timeIndex")));
+                reservationMap.add(reservation);
+            }
+        }
+        catch (SQLException exception){
+            exception.printStackTrace();
+        }
+
+        return reservationMap;
+
     }
 }

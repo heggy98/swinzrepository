@@ -87,4 +87,17 @@ public class ReservationService implements IReservationService {
                 parsedDate,
                 reservationDTO.time);
     }
+
+//    private ArrayList<Integer> getFreeTimes(Date date){
+//
+//        ArrayList<Integer> allTimes = new ArrayList<>();
+//
+//        var reservations = DataSourceConfig.GetByDate(date);
+//        if(reservations.size() == 2){
+//            return null;
+//        }
+//        if(reservations.size() == 0){
+//
+//        }
+//    }
 }
