@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Form} from "react-bootstrap";
+import {Row, Container, Button, Card, Col, Form, InputGroup, FormControl} from "react-bootstrap";
 import axios from 'axios';
 
 export default class ReservationList extends Component {
@@ -12,6 +12,7 @@ export default class ReservationList extends Component {
     }
 
     submitReservation = event => {
+        
         alert("Name: " + this.state.name + " Phone: " + this.state.phone + " Spz: " + this.state.spz + " Date: " + this.state.date + " Time: " + this.state.time);
         event.preventDefault();
 
@@ -41,68 +42,87 @@ export default class ReservationList extends Component {
         const {name, phone, spz, date, time} = this.state;
 
         return (
-         <Card className={"border border-dark bg-dark text-white"}>
-             <Card.Header>Add reservation</Card.Header>
+<Row className="justify-content-md-center">
+         <Card className={"border border-dark bg-dark text-white w-50 mt-5"}>
+             <Card.Header className="text-center text-uppercase font-weight-bold">Přidat rezervaci</Card.Header>
              <Form onSubmit={this.submitReservation} id="bookFormId">
                  <Card.Body>
-                     <Form.Row>
+                     <Container>
                          <Form.Group as={Col} controlId="formName">
-                             <Form.Label>Name</Form.Label>
-                             <Form.Control required
-                                           name="name"
-                                           type="name"
-                                           value={name}
-                                           onChange={this.reservationChange}
-                                           placeholder="Enter name" />
+                             <InputGroup className="mb-3">
+                                 <InputGroup.Prepend>
+                                     <InputGroup.Text id="basic-addon1" className="font-weight-bold">Jméno</InputGroup.Text>
+                                 </InputGroup.Prepend>
+                                 <Form.Control required
+                                               name="name"
+                                               type="name"
+                                               value={name}
+                                               onChange={this.reservationChange}
+                                               placeholder="Vložte jméno" />
+                             </InputGroup>
                          </Form.Group>
 
                          <Form.Group as={Col} controlId="formPhone">
-                             <Form.Label>Phone</Form.Label>
+                             <InputGroup className="my-4">
+                                 <InputGroup.Prepend>
+                                     <InputGroup.Text id="basic-addon1" className="font-weight-bold">Telefon</InputGroup.Text>
+                                 </InputGroup.Prepend>
                              <Form.Control required
                                            name="phone"
                                            type="tel"
                                            value={phone}
                                            onChange={this.reservationChange}
-                                           placeholder="Enter telephone" />
+                                           placeholder="Vložte tel. číslo" />
+                             </InputGroup>
                          </Form.Group>
 
                          <Form.Group as={Col} controlId="formSpz">
-                             <Form.Label>SPZ</Form.Label>
+                             <InputGroup className="my-4">
+                                 <InputGroup.Prepend>
+                                     <InputGroup.Text id="basic-addon1" className="font-weight-bold">SPZ</InputGroup.Text>
+                                 </InputGroup.Prepend>
+
                              <Form.Control required
                                            name="spz"
                                            type="name"
                                            value={spz}
                                            onChange={this.reservationChange}
-                                           placeholder="Enter spz" />
+                                           placeholder="Vložte spz" />
+                             </InputGroup>
                          </Form.Group>
+                     </Container>
+                     <Container>
+                         <Row>
+                             <Col> <Form.Group as={Col} controlId="formDate">
 
-                         <Form.Group as={Col} controlId="formDate">
-                             <Form.Label>Date</Form.Label>
-                             <Form.Control required
-                                           name="date"
-                                           type="date"
-                                           value={date}
-                                           onChange={this.reservationChange}
-                                           placeholder="Date" />
-                         </Form.Group>
+                                 <Form.Control required
+                                               name="date"
+                                               type="date"
+                                               value={date}
+                                               onChange={this.reservationChange}
+                                               placeholder="Date" />
+                             </Form.Group></Col>
+                             <Col><Form.Group as={Col} controlId="formTime">
 
-                         <Form.Group as={Col} controlId="formTime">
-                             <Form.Label>Time</Form.Label>
-                             <Form.Control required
-                                           name="time"
-                                           type="time"
-                                           value={time}
-                                           onChange={this.reservationChange}
-                                           label="Time" />
-                         </Form.Group>
+                                 <Form.Control required
+                                               name="time"
+                                               type="time"
+                                               value={time}
+                                               onChange={this.reservationChange}
+                                               label="Time" />
+                             </Form.Group></Col>
+                         </Row>
 
-                         <Button variant="success" type="submit">
-                             Submit
+
+
+                     </Container><Container>
+                         <Button variant="secondary mx-3 " type="submit">
+                             Rezervovat
                          </Button>
-                     </Form.Row>
+                 </Container>
                  </Card.Body>
              </Form>
-         </Card>
+         </Card></Row>
         );
     }
 }
