@@ -67,19 +67,21 @@ export default class ReservationList extends Component {
             });
     }
 
-    getFreeTimeIndexesByDate() {
 
-        axios.get("http://localhost:8080/times/")
-            .then(response => response.data)
-            .then((data) => {
-                if (data != null) {
-                    this.setState({times: data});
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+    // Function for future purposes
+    // getFreeTimeIndexesByDate() {
+    //
+    //     axios.get("http://localhost:8080/times/")
+    //         .then(response => response.data)
+    //         .then((data) => {
+    //             if (data != null) {
+    //                 this.setState({times: data});
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // }
 
     reservationChange(event) {
         this.setState({
