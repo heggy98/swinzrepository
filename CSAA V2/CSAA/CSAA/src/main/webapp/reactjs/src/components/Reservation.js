@@ -34,6 +34,24 @@ export default class ReservationList extends Component {
                     alert("Reservation submitted");
                 }
             })
+            .catch(function (error) {
+
+                alert("Selected datetime is full! Please select another time / date!")
+
+                if (error.response) {
+                    // Request made and server responded
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+
+            });
     }
 
     getTimeIndexes() {
@@ -41,7 +59,7 @@ export default class ReservationList extends Component {
             .then(response => response.data)
             .then((data) => {
                 if (data != null) {
-                    this.setState({times : data});
+                    this.setState({times: data});
                 }
             })
             .catch(function (error) {
@@ -55,7 +73,7 @@ export default class ReservationList extends Component {
             .then(response => response.data)
             .then((data) => {
                 if (data != null) {
-                    this.setState({times : data});
+                    this.setState({times: data});
                 }
             })
             .catch(function (error) {

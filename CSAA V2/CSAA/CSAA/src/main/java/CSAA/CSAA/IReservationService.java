@@ -1,5 +1,7 @@
 package CSAA.CSAA;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.Collection;
 
 public interface IReservationService {

@@ -1,5 +1,6 @@
 package CSAA.CSAA;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -29,6 +30,20 @@ public class ReservationService implements IReservationService {
     public Reservation save(ReservationDTO reservationDTO) {
 
         Reservation reservation = ParseDtoToEntity(reservationDTO);
+
+        var allReservations = findAll();
+
+        for (Reservation res :
+                allReservations) {
+            System.out.println(res.date);
+        }
+
+        var cantBook = allReservations.stream().filter(x -> (x.date.equals(reservation.getDate())) && (x.timeIndex == reservation.timeIndex)).count() > 1;
+
+        if(cantBook){
+            throw new RuntimeException("FULL");
+        }
+
         return DataSourceConfig.AddNewReservation(reservation);
     }
 
