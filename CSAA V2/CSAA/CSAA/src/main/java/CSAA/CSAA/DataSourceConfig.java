@@ -96,6 +96,25 @@ public class DataSourceConfig {
         return reservation;
     }
 
+    public static void deleteReservation(Reservation reservation){
+        Connection conn = ConnectDb();
+
+
+        String sql = String.format("DELETE from reserve_test " +
+                        "WHERE id = %s",
+                reservation.getId());
+
+        System.out.println(sql);
+
+        try {
+            assert conn != null;
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public static Reservation updateReservation(Reservation reservation) {
         Connection conn = ConnectDb();
 

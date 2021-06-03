@@ -15,7 +15,7 @@ export default class ReservationList extends Component {
 
 
     componentDidMount() {
-       this.findAllReservations()
+        this.findAllReservations()
     }
 
     findAllReservations(){
@@ -27,16 +27,15 @@ export default class ReservationList extends Component {
     }
 
     deleteReservation = (reservationId) =>{
-      axios.delete("http://localhost:8080/reservations/"+reservationId)
-          .then(response =>{
-              if(response.data != null){
-                  alert("Smazáno!");
-                  this.setState({
-                      reservations: this.state.reservations.filter(reservation => reservation.id !== reservationId)
-                  });
-
-              }
-          })
+        axios.delete("http://localhost:8080/reservations/"+reservationId)
+            .then(response =>{
+                if(response.data != null){
+                    alert("Smazáno!");
+                    this.setState({
+                        reservations: this.state.reservations.filter(reservation => reservation.id !== reservationId)
+                    });
+                }
+            })
     };
 
     render(){
@@ -45,35 +44,35 @@ export default class ReservationList extends Component {
                 <Card.Body>
                     <Table bordered hover striped variant="dark">
                         <thead>
-                            <tr>
-                                <th>Jméno</th>
-                                <th>Telefonní číslo</th>
-                                <th>SPZ</th>
-                                <th>Datum</th>
-                                <th>Čas</th>
-                                <th>Úpravy</th>
-                            </tr>
+                        <tr>
+                            <th>Jméno</th>
+                            <th>Telefonní číslo</th>
+                            <th>SPZ</th>
+                            <th>Datum</th>
+                            <th>Čas</th>
+                            <th>Úpravy</th>
+                        </tr>
                         </thead>
                         <tbody>
                         {
                             this.state.reservations.length === 0 ?
-                            <tr align="center">
-                                <td colSpan="6"> rezervací</td>
-                            </tr> :
-                            this.state.reservations.map((reservation) =>(
-                                <tr key={reservation.id}>
-                                    <td>{reservation.name}</td>
-                                    <td>{reservation.phone}</td>
-                                    <td>{reservation.spz}</td>
-                                    <td>{reservation.date}</td>
-                                    <td>{reservation.timeIndex}</td>
-                                    <td>
-                                        <ButtonGroup>
-                                            <Button size="sm" onClick={this.deleteReservation.bind(this, reservation.id)}>Smazat</Button>
-                                        </ButtonGroup>
-                                    </td>
-                                </tr>
-                            ))
+                                <tr align="center">
+                                    <td colSpan="6"> rezervací</td>
+                                </tr> :
+                                this.state.reservations.map((reservation) =>(
+                                    <tr key={reservation.id}>
+                                        <td>{reservation.name}</td>
+                                        <td>{reservation.phone}</td>
+                                        <td>{reservation.spz}</td>
+                                        <td>{reservation.date}</td>
+                                        <td>{reservation.timeIndex}</td>
+                                        <td>
+                                            <ButtonGroup>
+                                                <Button size="sm" onClick={this.deleteReservation.bind(this, reservation.id)}>Smazat</Button>
+                                            </ButtonGroup>
+                                        </td>
+                                    </tr>
+                                ))
 
                         }
                         </tbody>

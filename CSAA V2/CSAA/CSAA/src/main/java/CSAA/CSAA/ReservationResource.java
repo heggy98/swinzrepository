@@ -36,7 +36,7 @@ public class ReservationResource {
     }
 
     @DeleteMapping("{id}")
-    public Reservation deleteById(@PathVariable Long id){
-        return reservationService.deleteById(id);
+    public void deleteById(@PathVariable Long id){
+        reservationService.deleteById(id);
     }
 }

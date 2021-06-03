@@ -1,8 +1,7 @@
 package CSAA.CSAA;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,8 +59,15 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public Reservation deleteById(Long id) {
-        return null;
+    public void deleteById(Long id) {
+        try {
+            var reservation = DataSourceConfig.getReservation(id);
+            if(reservation != null){
+                DataSourceConfig.deleteReservation(reservation);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
 //    private static ArrayList<ReservationDTO> ConvertReservationsToDto(ArrayList<Reservation> reservations){
