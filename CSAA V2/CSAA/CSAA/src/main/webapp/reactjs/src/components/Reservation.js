@@ -15,6 +15,7 @@ export default class ReservationList extends Component {
         this.getTimeIndexes();
     }
 
+
     submitReservation = event => {
 
         event.preventDefault();
@@ -83,6 +84,26 @@ export default class ReservationList extends Component {
     //         });
     // }
 
+
+
+    nameNumberCheck(event){
+        var name = event.target.value;
+       if (/\d/.test(name)){
+           alert("Jméno obsahuje číslice!");
+           event.target.value = name.replace(/\d/gi, '');
+       }
+    }
+
+
+    phoneCheck(event){
+        var phone = event.target.value;
+        var phoneno = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+        if (phone.match(phoneno)){return true;}
+        else{
+            alert("Telefonní číslo obsahuje nepovolené znaky!");
+        }
+    }
+
     reservationChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -116,7 +137,9 @@ export default class ReservationList extends Component {
                                                       name="name"
                                                       type="name"
                                                       value={name}
+                                                      maxLength={30}
                                                       onChange={this.reservationChange}
+                                                      onBlur={this.nameNumberCheck}
                                                       placeholder="Vložte jméno"
                                         />
                                     </InputGroup>
@@ -132,8 +155,9 @@ export default class ReservationList extends Component {
                                                       name="phone"
                                                       type="tel"
                                                       value={phone}
+                                                      maxLength={13}
                                                       onChange={this.reservationChange}
-
+                                                      onBlur={this.phoneCheck}
                                                       placeholder="Vložte tel. číslo"/>
                                     </InputGroup>
                                 </Form.Group>
@@ -149,6 +173,7 @@ export default class ReservationList extends Component {
                                                       name="spz"
                                                       type="name"
                                                       value={spz}
+                                                      maxLength={8}
                                                       onChange={this.reservationChange}
                                                       placeholder="Vložte spz"/>
                                     </InputGroup>
@@ -162,6 +187,7 @@ export default class ReservationList extends Component {
                                                       name="date"
                                                       type="date"
                                                       value={date}
+
                                                       onChange={this.reservationChange}
                                                       placeholder="Date"/>
                                     </Form.Group></Col>
@@ -198,4 +224,5 @@ export default class ReservationList extends Component {
                 </Card></Row>
         );
     }
+
 }
