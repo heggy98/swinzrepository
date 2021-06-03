@@ -12,7 +12,14 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Collection<Reservation> findAll() {
-        return DataSourceConfig.getReservations();
+        var reservations = DataSourceConfig.getReservations();
+        for (Reservation res :
+                reservations) {
+            if(res.time == "" || res.time == null){
+                res.time = TimeIndex.getByIndex(res.timeIndex);
+            }
+        }
+        return reservations;
     }
 
     @Override
@@ -88,7 +95,7 @@ public class ReservationService implements IReservationService {
 //                reservation.getPhone(),
 //                reservation.getSpz(),
 //                String.valueOf(reservation.getDate()),
-//                TimeIndex.hours.get(reservation.getTimeIndex()));
+//                TimeIndex.getByIndex(reservation.timeIndex));
 //    }
 
     private static Reservation ParseDtoToEntity(ReservationDTO reservationDTO){

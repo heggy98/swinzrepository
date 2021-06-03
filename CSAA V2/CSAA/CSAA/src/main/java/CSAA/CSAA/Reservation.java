@@ -13,6 +13,7 @@ public class Reservation {
     public String phone;
     public String spz;
     public Integer timeIndex;
+    public String time;
     public Date date;
 
     public Reservation() {
@@ -24,6 +25,7 @@ public class Reservation {
         this.spz = spz;
         this.timeIndex = timeIndex;
         this.date = date;
+        this.time = TimeIndex.getByIndex(timeIndex);
     }
 
     public Reservation(long id, String name, String phone, String spz, Date date, int timeIndex) {
@@ -33,6 +35,7 @@ public class Reservation {
         this.spz = spz;
         this.timeIndex = timeIndex;
         this.date = date;
+        this.time = TimeIndex.getByIndex(timeIndex);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class Reservation {
                 "name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", spz='" + spz + '\'' +
-                ", timeIndex=" + timeIndex +
+                ", timeIndex=" + time +
                 ", date=" + dateString +
                 '}';
     }
@@ -97,6 +100,7 @@ public class Reservation {
 
     public void setTimeIndex(Integer timeIndex) {
         this.timeIndex = timeIndex;
+        this.time = TimeIndex.getByIndex(timeIndex);
     }
 
     public Date getDate() {

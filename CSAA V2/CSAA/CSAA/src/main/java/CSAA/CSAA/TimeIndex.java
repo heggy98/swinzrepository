@@ -31,6 +31,10 @@ public class TimeIndex {
         throw new RuntimeException("This hour has no index!");
     }
 
+    public static String getByIndex(int index){
+        return hours.get(index);
+    }
+
     @Override
     public String toString() {
         return "tajm index is here ! ";

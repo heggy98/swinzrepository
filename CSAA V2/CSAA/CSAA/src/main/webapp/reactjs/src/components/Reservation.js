@@ -69,6 +69,14 @@ export default class ReservationList extends Component {
     }
 
 
+
+    reservationChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+
     // Function for future purposes
     // getFreeTimeIndexesByDate() {
     //
@@ -104,11 +112,7 @@ export default class ReservationList extends Component {
         }
     }
 
-    reservationChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+
 
     render() {
         const {name, phone, spz, date, time, times} = this.state;

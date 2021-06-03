@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, ButtonGroup, Card, Table} from 'react-bootstrap';
 import axios from 'axios';
+import {forEach} from "react-bootstrap/ElementChildren";
 
 
 
@@ -25,6 +26,7 @@ export default class ReservationList extends Component {
                 this.setState({reservations: data});
             })
     }
+
 
     deleteReservation = (reservationId) =>{
         axios.delete("http://localhost:8080/reservations/"+reservationId)
@@ -65,7 +67,7 @@ export default class ReservationList extends Component {
                                         <td>{reservation.phone}</td>
                                         <td>{reservation.spz}</td>
                                         <td>{reservation.date}</td>
-                                        <td>{reservation.timeIndex}</td>
+                                        <td>{reservation.time}</td>
                                         <td>
                                             <ButtonGroup>
                                                 <Button size="sm" onClick={this.deleteReservation.bind(this, reservation.id)}>Smazat</Button>

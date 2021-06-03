@@ -18,6 +18,13 @@ public class TimeResource {
         return TimeIndex.GetValues();
     }
 
+    @ResponseBody
+    @RequestMapping("/byIndex")
+    @GetMapping
+    public Object getByIndex(@RequestParam int index) {
+        return TimeIndex.getByIndex(index);
+    }
+
 //    Function for future purposes!
 //    @ResponseBody
 //    @RequestMapping("/byDate")
