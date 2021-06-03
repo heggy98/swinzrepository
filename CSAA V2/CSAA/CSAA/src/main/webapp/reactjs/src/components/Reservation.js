@@ -187,7 +187,6 @@ export default class ReservationList extends Component {
                                                       name="date"
                                                       type="date"
                                                       value={date}
-
                                                       onChange={this.reservationChange}
                                                       placeholder="Date"/>
                                     </Form.Group></Col>

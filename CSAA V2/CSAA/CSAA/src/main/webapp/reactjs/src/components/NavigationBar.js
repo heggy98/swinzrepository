@@ -12,7 +12,10 @@ class NavigationBar extends React.Component {
                     <img src="src//main//resources//ico.png" alt=''/>Car service adminstration / application
                 </Link>
                 <Nav className="mr-auto">
-                    <Link to={"add"} className="nav-link">Add reservation</Link>
+                    <Link to={"add"} className="nav-link">Nová rezervace</Link>
+                </Nav>
+                <Nav className="mr-auto">
+                    <Link to={"list"} className="nav-link">Rezervace</Link>
                 </Nav>
             </Navbar>
         )
