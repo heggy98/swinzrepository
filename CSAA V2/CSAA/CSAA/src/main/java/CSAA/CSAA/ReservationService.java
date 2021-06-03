@@ -62,7 +62,7 @@ public class ReservationService implements IReservationService {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return null;
+        return reservation;
     }
 
     @Override

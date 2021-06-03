@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, ButtonGroup, Card, Table} from 'react-bootstrap';
 import axios from 'axios';
 import {forEach} from "react-bootstrap/ElementChildren";
+import {Link} from "react-router-dom";
+
 
 
 
@@ -59,7 +61,7 @@ export default class ReservationList extends Component {
                         {
                             this.state.reservations.length === 0 ?
                                 <tr align="center">
-                                    <td colSpan="6"> rezervací</td>
+                                    <td colSpan="6"> 0 rezervací</td>
                                 </tr> :
                                 this.state.reservations.map((reservation) =>(
                                     <tr key={reservation.id}>
@@ -70,7 +72,9 @@ export default class ReservationList extends Component {
                                         <td>{reservation.time}</td>
                                         <td>
                                             <ButtonGroup>
-                                                <Button size="sm" onClick={this.deleteReservation.bind(this, reservation.id)}>Smazat</Button>
+                                                <Link to={"edit/"+reservation.id} className="btn btn-sm btn-info">Upravit</Link>{' '}
+                                                <Button variant="danger" size="sm" onClick={this.deleteReservation.bind(this, reservation.id)}>✕</Button>
+
                                             </ButtonGroup>
                                         </td>
                                     </tr>

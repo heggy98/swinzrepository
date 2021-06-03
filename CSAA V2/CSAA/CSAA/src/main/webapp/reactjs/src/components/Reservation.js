@@ -6,15 +6,47 @@ export default class ReservationList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {name: '', spz: '', phone: '', date: '', time: '', times: []};
+        this.state = this.initialState;
+        this.state.show = false;
         this.reservationChange = this.reservationChange.bind(this);
         this.submitReservation = this.submitReservation.bind(this);
     }
 
-    componentDidMount() {
-        this.getTimeIndexes();
+    initialState = {
+        id:'', name: '', spz: '', phone: '', date: '', time: '', times: []
     }
 
+    componentDidMount() {
+
+        this.getTimeIndexes();
+
+        const reservationId = +this.props.match.params.id;
+        if(reservationId){
+            this.findReservationById(reservationId);
+        }
+    }
+
+    findReservationById = (reservationId) => {
+        axios.get("http://localhost:8080/reservations/"+reservationId)
+            .then(response =>{
+                if(response.data != null){
+                    this.setState({
+                        id: response.data.id,
+                        name: response.data.name,
+                        spz: response.data.spz,
+                        phone: response.data.phone,
+                        date: response.data.date,
+                        time: response.data.time,
+                        timeIndex: response.data.timeIndex
+
+
+
+                    });
+                }
+            }).catch((error) => {
+            console.error("Error - "+error);
+        });
+    }
 
     submitReservation = event => {
 
@@ -27,12 +59,14 @@ export default class ReservationList extends Component {
             spz: this.state.spz,
             date: this.state.date,
             time: this.state.time
+
         };
 
         axios.post("http://localhost:8080/reservations", reservation)
             .then(response => {
                 if (response.data != null) {
                     alert("Reservation submitted");
+                    this.setState(this.initialState);
                 }
             })
             .catch(function (error) {
@@ -98,7 +132,6 @@ export default class ReservationList extends Component {
         var name = event.target.value;
        if (/\d/.test(name)){
            alert("Jméno obsahuje číslice!");
-           event.target.value = name.replace(/\d/gi, '');
        }
     }
 
@@ -111,6 +144,52 @@ export default class ReservationList extends Component {
             alert("Telefonní číslo obsahuje nepovolené znaky!");
         }
     }
+
+    updateReservation = event => {
+        event.preventDefault();
+
+        const reservation = {
+            id: this.state.id,
+            name: this.state.name,
+            phone: this.state.phone,
+            spz: this.state.spz,
+            date: this.state.date,
+            time: this.state.time,
+            timeIndex: this.state.timeIndex
+
+        };
+
+        axios.put("http://localhost:8080/reservations", reservation)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({"show": true});
+                    this.setState(this.initialState);
+                    alert("Reservation edited");
+                }
+            })
+            .catch(function (error) {
+
+                alert("Selected datetime is full! Please select another time / date!")
+
+                if (error.response) {
+                    // Request made and server responded
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+
+            });
+    };
+
+    reservationList = () =>{
+        return this.props.history.push("/list");
+    };
 
 
 
@@ -126,9 +205,9 @@ export default class ReservationList extends Component {
         return (
             <Row className="justify-content-md-center">
                 <Card className={"border border-dark bg-dark text-white w-50 mt-5"}>
-                    <Card.Header className="text-center text-uppercase font-weight-bold">Přidat
+                    <Card.Header className="text-center text-uppercase font-weight-bold">{this.state.id ? "Upravit " : "Přidat "}
                         rezervaci</Card.Header>
-                    <Form onSubmit={this.submitReservation} id="bookFormId">
+                    <Form onSubmit={this.state.id ? this.updateReservation : this.submitReservation} id="bookFormId">
                         <Card.Body>
                             <Container>
                                 <Form.Group as={Col} controlId="formName">
@@ -219,7 +298,10 @@ export default class ReservationList extends Component {
 
                             </Container><Container>
                             <Button variant="secondary mx-3 " type="submit">
-                                Rezervovat
+                                {this.state.id ? "Upravit" : "Rezervovat"}
+                            </Button>
+                            <Button variant="secondary mx-3 " type="button" onClick={this.reservationList.bind()}>
+                                Seznam
                             </Button>
                         </Container>
                         </Card.Body>

@@ -19,6 +19,7 @@ function App() {
                     <Switch>
                         <Route path="/" exact component={Welcome}/>
                         <Route path="/add" exact component={Reservation}/>
+                        <Route path="/edit/:id" exact component={Reservation}/>
                         <Route path="/list" exact component={ReservationList}/>
                     </Switch>
                 </Col>
