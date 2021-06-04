@@ -30,15 +30,16 @@ export default class ReservationList extends Component {
 
 
     deleteReservation = (reservationId) =>{
-        axios.delete("http://localhost:8080/reservations/"+reservationId)
-            .then(response =>{
-                if(response.data != null){
-                    alert("Smazáno!");
-                    this.setState({
-                        reservations: this.state.reservations.filter(reservation => reservation.id !== reservationId)
-                    });
-                }
-            })
+        if(window.confirm("Jste si jistý smazáním této rezervace?")){
+            axios.delete("http://localhost:8080/reservations/"+reservationId)
+                .then(response =>{
+                    if(response.data != null){
+                        this.setState({
+                            reservations: this.state.reservations.filter(reservation => reservation.id !== reservationId)
+                        });
+                    }
+                })
+        }
     };
 
     render(){

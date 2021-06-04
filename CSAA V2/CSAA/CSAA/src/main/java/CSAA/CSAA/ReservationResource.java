@@ -1,8 +1,6 @@
 package CSAA.CSAA;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -25,14 +23,14 @@ public class ReservationResource {
         return reservationService.findById(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping()
     public Reservation save(@RequestBody ReservationDTO reservationDTO){
         return reservationService.save(reservationDTO);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Reservation update(@RequestBody Reservation reservation){
-        return reservationService.update(reservation);
+    @PutMapping()
+    public Reservation update(@RequestBody ReservationDTO reservationDTO){
+        return reservationService.update(reservationDTO);
     }
 
     @DeleteMapping("{id}")

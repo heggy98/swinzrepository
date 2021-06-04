@@ -11,7 +11,7 @@ public interface IReservationService {
 
     Reservation save(ReservationDTO reservationDTO);
 
-    Reservation update(Reservation reservation);
+    Reservation update(ReservationDTO reservationDTO);
 
     void deleteById(Long id);
 }

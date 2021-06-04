@@ -13,9 +13,10 @@ public class ReservationService implements IReservationService {
     @Override
     public Collection<Reservation> findAll() {
         var reservations = DataSourceConfig.getReservations();
+        assert reservations != null;
         for (Reservation res :
                 reservations) {
-            if(res.time == "" || res.time == null){
+            if(res.time.equals("")){
                 res.time = TimeIndex.getByIndex(res.timeIndex);
             }
         }
@@ -34,35 +35,37 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation save(ReservationDTO reservationDTO) {
-
+        CheckTimeAvaiability(reservationDTO);
         Reservation reservation = ParseDtoToEntity(reservationDTO);
+        return DataSourceConfig.addNewReservation(reservation);
+    }
 
+    private void CheckTimeAvaiability(ReservationDTO reservationDTO) {
         var allReservations = findAll();
-
-        for (Reservation res :
-                allReservations) {
-            System.out.println(res.date);
-        }
-
-        var cantBook = allReservations.stream().filter(x -> (x.date.equals(reservation.getDate())) && (x.timeIndex == reservation.timeIndex)).count() > 1;
+        var cantBook = allReservations.stream().filter(x -> (x.date.equals(reservationDTO.date)) && (x.timeIndex == reservationDTO.timeIndex)).count() > 1;
 
         if(cantBook){
-            throw new RuntimeException("FULL");
+            throw new RuntimeException("ReservationService/save - This datetime is full.");
         }
-
-        return DataSourceConfig.AddNewReservation(reservation);
     }
 
     @Override
-    public Reservation update(Reservation reservation) {
+    public Reservation update(ReservationDTO reservationDTO) {
+        Reservation reservationInDb = null;
+
         try {
-            if(DataSourceConfig.getReservation(reservation.getId()) != null){
-                return DataSourceConfig.updateReservation(reservation);
+            CheckTimeAvaiability(reservationDTO);
+            reservationInDb = DataSourceConfig.getReservation(reservationDTO.getId());
+            if(reservationInDb != null){
+
+                reservationInDb = ParseDtoToEntity(reservationDTO);
+                return DataSourceConfig.updateReservation(reservationInDb);
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return reservation;
+
+        return reservationInDb;
     }
 
     @Override
@@ -77,7 +80,45 @@ public class ReservationService implements IReservationService {
         }
     }
 
-//    private static ArrayList<ReservationDTO> ConvertReservationsToDto(ArrayList<Reservation> reservations){
+    private static Reservation ParseDtoToEntity(ReservationDTO reservationDTO){
+
+        Date parsedDate = craeteDateFromString(reservationDTO.date);
+
+        return new Reservation(
+                reservationDTO.getId(),
+                reservationDTO.name,
+                reservationDTO.phone,
+                reservationDTO.spz,
+                parsedDate,
+                reservationDTO.time);
+    }
+
+    private static Date craeteDateFromString(String dateToParse) {
+        Date parsedDate = null;
+        try {
+            parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateToParse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return parsedDate;
+    }
+
+
+
+//    private ArrayList<Integer> getFreeTimes(Date date){
+//
+//        ArrayList<Integer> allTimes = new ArrayList<>();
+//
+//        var reservations = DataSourceConfig.GetByDate(date);
+//        if(reservations.size() == 2){
+//            return null;
+//        }
+//        if(reservations.size() == 0){
+//
+//        }
+//    }
+
+    //    private static ArrayList<ReservationDTO> ConvertReservationsToDto(ArrayList<Reservation> reservations){
 //        ArrayList<ReservationDTO> reservationsDTOs = new ArrayList<>();
 //
 //        for (Reservation reservation : reservations) {
@@ -98,38 +139,6 @@ public class ReservationService implements IReservationService {
 //                TimeIndex.getByIndex(reservation.timeIndex));
 //    }
 
-    private static Reservation ParseDtoToEntity(ReservationDTO reservationDTO){
-
-        Date parsedDate = null;
-        try {
-            parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(reservationDTO.date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if(reservationDTO.timeIndex != 0){
-            reservationDTO.time = reservationDTO.timeIndex;
-        }
-
-        return new Reservation(
-                0,
-                reservationDTO.name,
-                reservationDTO.phone,
-                reservationDTO.spz,
-                parsedDate,
-                reservationDTO.time);
-    }
-
-//    private ArrayList<Integer> getFreeTimes(Date date){
-//
-//        ArrayList<Integer> allTimes = new ArrayList<>();
-//
-//        var reservations = DataSourceConfig.GetByDate(date);
-//        if(reservations.size() == 2){
-//            return null;
-//        }
-//        if(reservations.size() == 0){
-//
-//        }
-//    }
 }
+
+

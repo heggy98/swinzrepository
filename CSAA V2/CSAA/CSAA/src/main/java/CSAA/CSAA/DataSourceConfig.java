@@ -68,7 +68,7 @@ public class DataSourceConfig {
 
 
     public static Reservation getReservation(Long id) throws SQLException {
-        Reservation reservation = null;
+        Reservation reservation;
 
         try {
             Connection conn = ConnectDb();
@@ -118,6 +118,7 @@ public class DataSourceConfig {
     public static Reservation updateReservation(Reservation reservation) {
         Connection conn = ConnectDb();
 
+        var formattedDate = giveMeDateToSaveInDb(reservation);
 
         String sql = String.format("UPDATE reserve_test " +
                         "SET name = '%s', phone = '%s', spz = '%s', timeIndex = '%s', date = '%s'" +
@@ -126,7 +127,7 @@ public class DataSourceConfig {
                 reservation.getPhone(),
                 reservation.getSpz(),
                 reservation.getTimeIndex(),
-                reservation.getDate(),
+                formattedDate,
                 reservation.getId());
 
         System.out.println(sql);
@@ -142,18 +143,14 @@ public class DataSourceConfig {
         return reservation;
     }
 
-    public static Reservation AddNewReservation(Reservation reservation) {
-        Connection conn = ConnectDb();
-
+    private static String giveMeDateToSaveInDb(Reservation reservation){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(reservation.getDate());
+    }
 
-        System.out.println("Sent date: " + reservation.getDate());
-
-        var formattedDate = sdf.format(reservation.getDate());
-
-        System.out.println("Formatted date: " + formattedDate);
-
-        System.out.println("Sent timeindex : " + reservation.getTimeIndex());
+    public static Reservation addNewReservation(Reservation reservation) {
+        Connection conn = ConnectDb();
+        var formattedDate = giveMeDateToSaveInDb(reservation);
 
         String sql = String.format("INSERT INTO reserve_test (name, phone, spz, timeIndex, date) " +
                         "VALUES ('%s', '%s', '%s', '%s', '%s')",

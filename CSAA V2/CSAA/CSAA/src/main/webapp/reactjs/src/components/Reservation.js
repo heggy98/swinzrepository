@@ -17,14 +17,25 @@ export default class ReservationList extends Component {
     }
 
     componentDidMount() {
-
-        this.getTimeIndexes();
-
+    this.getTimeIndexes();
         const reservationId = +this.props.match.params.id;
         if(reservationId){
             this.findReservationById(reservationId);
         }
     }
+
+    getTimeIndexes() {
+            axios.get("http://localhost:8080/times")
+                .then(response => response.data)
+                .then((data) => {
+                    if (data != null) {
+                        this.setState({times: data});
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
 
     findReservationById = (reservationId) => {
         axios.get("http://localhost:8080/reservations/"+reservationId)
@@ -36,11 +47,7 @@ export default class ReservationList extends Component {
                         spz: response.data.spz,
                         phone: response.data.phone,
                         date: response.data.date,
-                        time: response.data.time,
-                        timeIndex: response.data.timeIndex
-
-
-
+                        time: response.data.timeIndex,
                     });
                 }
             }).catch((error) => {
@@ -65,13 +72,14 @@ export default class ReservationList extends Component {
         axios.post("http://localhost:8080/reservations", reservation)
             .then(response => {
                 if (response.data != null) {
-                    alert("Reservation submitted");
+                    alert("Rezervace byla úspěšně zaregistrována do systému!");
                     this.setState(this.initialState);
+                    this.getTimeIndexes();
                 }
             })
             .catch(function (error) {
 
-                alert("Selected datetime is full! Please select another time / date!")
+                alert("Vybraný čas je plný, prosím zvolte jiný čas, případně jiné datum!")
 
                 if (error.response) {
                     // Request made and server responded
@@ -89,18 +97,7 @@ export default class ReservationList extends Component {
             });
     }
 
-    getTimeIndexes() {
-        axios.get("http://localhost:8080/times")
-            .then(response => response.data)
-            .then((data) => {
-                if (data != null) {
-                    this.setState({times: data});
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
+
 
 
 
@@ -170,12 +167,13 @@ export default class ReservationList extends Component {
                 if (response.data != null) {
                     this.setState({"show": true});
                     this.setState(this.initialState);
-                    alert("Reservation edited");
+                    this.getTimeIndexes();
+                    alert("Rezervace byla úspěšně upravena!");
                 }
             })
             .catch(function (error) {
 
-                alert("Selected datetime is full! Please select another time / date!")
+                alert("Vybraný čas je plný, prosím zvolte jiný čas, případně jiné datum!")
 
                 if (error.response) {
                     // Request made and server responded
