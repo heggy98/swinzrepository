@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 
 import {Navbar, Nav} from 'react-bootstrap';
@@ -9,12 +10,12 @@ class NavigationBar extends React.Component {
         return (
             <Navbar bg="dark" variant="dark">
                 <Link to={""} className="navbar-brand">
-                    <img src="src//main//resources//ico.png" alt=''/>Car service adminstration / application
+                    <img src="src//main//resources//ico.png" alt=''/>Domů
                 </Link>
-                <Nav className="mr-auto">
+                <Nav className="">
                     <Link to={"add"} className="nav-link">Nová rezervace</Link>
                 </Nav>
-                <Nav className="mr-auto">
+                <Nav className="">
                     <Link to={"list"} className="nav-link">Rezervace</Link>
                 </Nav>
             </Navbar>
@@ -24,3 +25,4 @@ class NavigationBar extends React.Component {
 }
 
 export default NavigationBar
+*/

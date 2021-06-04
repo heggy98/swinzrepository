@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import NavigationBar from "./components/NavigationBar";
 import {Container, Row, Col} from "react-bootstrap";
 import Reservation from "./components/Reservation"
 import ReservationList from "./components/ReservationList"
@@ -11,7 +10,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 function App() {
   return (
     <Router className="App">
-      <NavigationBar/>
       <br/>
       <Container>
             <Row>

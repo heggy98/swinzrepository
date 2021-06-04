@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Container, Button, Card, Col, Form, InputGroup, FormControl} from "react-bootstrap";
+import {Row, Container, Button, Card, Col, Form, InputGroup, FormControl, Jumbotron} from "react-bootstrap";
 import axios from 'axios';
 
 export default class ReservationList extends Component {
@@ -139,8 +139,14 @@ export default class ReservationList extends Component {
     phoneCheck(event){
         var phone = event.target.value;
         var phoneno = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-        if (phone.match(phoneno)){return true;}
+        const button = document.getElementById("sub");
+        if (phone.match(phoneno)){
+            button.classList.remove("vanish");
+            return true;
+     }
         else{
+
+            button.classList.add("vanish");
             alert("Telefonní číslo obsahuje nepovolené znaky!");
         }
     }
@@ -203,8 +209,13 @@ export default class ReservationList extends Component {
         }, this);
 
         return (
+            <Jumbotron className="hero">
+
+                <Row>
+                <Col>
             <Row className="justify-content-md-center">
-                <Card className={"border border-dark bg-dark text-white w-50 mt-5"}>
+
+                <Card className={"border "}>
                     <Card.Header className="text-center text-uppercase font-weight-bold">{this.state.id ? "Upravit " : "Přidat "}
                         rezervaci</Card.Header>
                     <Form onSubmit={this.state.id ? this.updateReservation : this.submitReservation} id="bookFormId">
@@ -297,16 +308,27 @@ export default class ReservationList extends Component {
 
 
                             </Container><Container>
-                            <Button variant="secondary mx-3 " type="submit">
+                            <Button variant="info mx-3 " type="submit" id="sub">
                                 {this.state.id ? "Upravit" : "Rezervovat"}
                             </Button>
-                            <Button variant="secondary mx-3 " type="button" onClick={this.reservationList.bind()}>
-                                Seznam
-                            </Button>
+
                         </Container>
                         </Card.Body>
                     </Form>
-                </Card></Row>
+                </Card></Row>  </Col>
+                <Col>
+                    <h1>Podmínky pro rezervaci</h1>
+                    <p>Každý den lze pro danou hodinu vytvořit maximálně 2 rezervace. Pokud se pokusíte daný limit přesáhnout, budete vyzváni k vybráni jiného termínu.</p>
+                    <ul>
+                        <li>Jméno je omezeno na 30 znaků</li>
+                        <li>Telefonní číslo nesmí obsahovat nepovolené znaky</li>
+                    </ul>
+                    <Button variant="info btn-lg" type="button" onClick={this.reservationList.bind()}>
+                        Seznam rezervací
+                    </Button>
+                </Col>
+            </Row>
+            </Jumbotron>
         );
     }
 

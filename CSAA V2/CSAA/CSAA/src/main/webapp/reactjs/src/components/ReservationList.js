@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, ButtonGroup, Card, Table} from 'react-bootstrap';
+import {Button, ButtonGroup, Card, Jumbotron, Row, Table, Col} from 'react-bootstrap';
 import axios from 'axios';
-import {forEach} from "react-bootstrap/ElementChildren";
 import {Link} from "react-router-dom";
 
 
@@ -44,9 +43,24 @@ export default class ReservationList extends Component {
 
     render(){
         return (
-            <Card className={"border border-dark bg-dark text-white"}>
+            <Jumbotron className="hero">
+                <Row className={"mb-3"}>
+                <Col>
+                <h1>Seznam rezervací</h1>
+                </Col>
+                    <Col className={"fr"}>
+                        <Link to={""} className="btn btn-info btn-lg">
+                          Domů
+                        </Link>
+                    {' '}
+                        <Link to={"add"} className="btn btn-info btn-lg">
+                            Nová rezervace
+                        </Link>
+                    </Col>
+                </Row>
+            <Card className={"border "}>
                 <Card.Body>
-                    <Table bordered hover striped variant="dark">
+                    <Table bordered hover striped responsive>
                         <thead>
                         <tr>
                             <th>Jméno</th>
@@ -86,6 +100,7 @@ export default class ReservationList extends Component {
                 </Card.Body>
 
             </Card>
+            </Jumbotron>
         );
     }
 }
