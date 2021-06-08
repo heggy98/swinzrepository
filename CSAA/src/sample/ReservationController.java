@@ -1,15 +1,18 @@
 package sample;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class ReservationController implements Initializable {
 
@@ -45,11 +48,31 @@ public class ReservationController implements Initializable {
     private Button createButton, editButton;
 
     @FXML
-    private void createReservation() {
-        ReservationProvider.CreateReservation(tf_name.getText(), tf_phone.getText(), tf_spz.getText(), dp_date, timeChoiceBox.getValue());
-        SetCreateFieldToEmpty();
-        refreshReservations();
-        tabs.getSelectionModel().select(tab_table);
+    private Label errorMessage;
+
+    @FXML
+    private void createReservation() throws InterruptedException {
+        try{
+            ReservationProvider.CreateReservation(tf_name.getText(), tf_phone.getText(), tf_spz.getText(), dp_date, timeChoiceBox.getValue());
+            SetCreateFieldToEmpty();
+            refreshReservations();
+            tabs.getSelectionModel().select(tab_table);
+        }
+        catch (RuntimeException ex){
+            ShowMessage("V tento den, v tomto časovém termínu je příliš mnoho rezervací, zvolte prosím jiný den/čas.");
+        }
+    }
+
+    private void ShowMessage(String message) {
+        errorMessage.setText(message);
+        errorMessage.setVisible(true);
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(5)
+        );
+        visiblePause.setOnFinished(
+                event -> HideErrorMessage()
+        );
+        visiblePause.play();
     }
 
     private void SetCreateFieldToEmpty() {
@@ -58,6 +81,12 @@ public class ReservationController implements Initializable {
         tf_spz.setText("");
         dp_date.setValue(null);
         timeChoiceBox.setValue(null);
+        HideErrorMessage();
+    }
+
+    private void HideErrorMessage() {
+        errorMessage.setText("ErrorMessage");
+        errorMessage.setVisible(false);
     }
 
     @Override
@@ -142,10 +171,14 @@ public class ReservationController implements Initializable {
 
     @FXML
     public void editReservation(){
-        ReservationProvider.EditReservation(selectedReservation.getId() ,tf_name_edit.getText(), tf_phone_edit.getText(), tf_spz_edit.getText(), dp_date_edit, timeChoiceBox_edit.getValue());
-        refreshReservations();
-        tabs.getSelectionModel().select(tab_table);
-        setSelectedReservationToNull();
+        try{
+            ReservationProvider.EditReservation(selectedReservation.getId() ,tf_name_edit.getText(), tf_phone_edit.getText(), tf_spz_edit.getText(), dp_date_edit, timeChoiceBox_edit.getValue());
+            refreshReservations();
+            tabs.getSelectionModel().select(tab_table);
+            setSelectedReservationToNull();
+        }
+        catch (RuntimeException ex){
+            ShowMessage("V tento den, v tomto časovém termínu je příliš mnoho rezervací, zvolte prosím jiný den/čas.");
+        }
     }
-
 }
