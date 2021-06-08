@@ -115,7 +115,7 @@ public class DataSourceConfig {
         }
     }
 
-    public static Reservation updateReservation(Reservation reservation) {
+    public static Reservation updateReservation(Reservation reservation) throws SQLException {
         Connection conn = ConnectDb();
 
         var formattedDate = giveMeDateToSaveInDb(reservation);
@@ -132,13 +132,9 @@ public class DataSourceConfig {
 
         System.out.println(sql);
 
-        try {
-            assert conn != null;
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        assert conn != null;
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(sql);
 
         return reservation;
     }
