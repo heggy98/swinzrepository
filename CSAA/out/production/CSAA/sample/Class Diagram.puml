@@ -1,17 +1,26 @@
 @startuml
 
+
+
+
+package App{
+
 Main --> Constants
-ReservationController --> ReservationProvider
-ReservationController --> ReservationDTO
-ReservationProvider --> Reservation
-ReservationProvider --> ReservationDTO
-ReservationProvider --> TimeIndex
-ReservationProvider --> Database_Access
+
+
 
 class Main{
 + void start(Stage primaryStage)
 + void main(String[] args)
 }
+
+class Constants{
++ final static String Application_Title
++ final static String FXML_URL
++ final static String ICO_URL
+}
+
+package Controllers{
 
 class ReservationController {
 + ObservableList<ReservationDTO> listR
@@ -32,11 +41,36 @@ class ReservationController {
 - refreshReservations()
 }
 
-class Constants{
-+ final static String Application_Title
-+ final static String FXML_URL
-+ final static String ICO_URL
 }
+
+package Providers{
+
+class ReservationProvider{
++ ObservableList<ReservationDTO> GetAllReservations()
++ Reservation GetReservation(int id)
+- ObservableList<ReservationDTO> ConvertReservationsToDto(ObservableList<Reservation> reservations)
+- ReservationDTO ConvertReservationToDto(Reservation reservation)
++ void CreateReservation(String name, String phone, String spz, DatePicker datePicker, String time)
++ void EditReservation (int id, String name, String phone, String spz, DatePicker datePicker, String time)
+}
+ReservationController --> ReservationProvider
+
+}
+
+package TimePackage{
+ReservationProvider --> TimeIndex
+}
+
+package DatabasePackage{
+ReservationProvider --> Database_Access
+}
+
+
+
+
+
+
+package Models{
 
 class ReservationDTO {
 - int id;
@@ -62,14 +96,14 @@ ctors()
 getters / setters()
 }
 
-class ReservationProvider{
-+ ObservableList<ReservationDTO> GetAllReservations()
-+ Reservation GetReservation(int id)
-- ObservableList<ReservationDTO> ConvertReservationsToDto(ObservableList<Reservation> reservations)
-- ReservationDTO ConvertReservationToDto(Reservation reservation)
-+ void CreateReservation(String name, String phone, String spz, DatePicker datePicker, String time)
-+ void EditReservation (int id, String name, String phone, String spz, DatePicker datePicker, String time)
+ReservationProvider --> Reservation
+ReservationProvider --> ReservationDTO
+ReservationController --> ReservationDTO
+
 }
+
+
+
 
 
 class TimeIndex{
@@ -85,7 +119,7 @@ class Database_Access{
 + void AddNewReservation(Reservation reservation)
 }
 
-
+}
 
 
 @enduml

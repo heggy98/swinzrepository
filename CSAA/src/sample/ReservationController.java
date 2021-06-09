@@ -51,7 +51,7 @@ public class ReservationController implements Initializable {
     private Button createButton, editButton;
 
     @FXML
-    private Label errorMessage;
+    private Label errorMessage, editErrorMessage;
 
     @FXML
     private void createReservation() throws InterruptedException {
@@ -69,6 +69,8 @@ public class ReservationController implements Initializable {
     private void ShowMessage(String message) {
         errorMessage.setText(message);
         errorMessage.setVisible(true);
+        editErrorMessage.setText(message);
+        editErrorMessage.setVisible(true);
         PauseTransition visiblePause = new PauseTransition(
                 Duration.seconds(5)
         );
@@ -90,6 +92,8 @@ public class ReservationController implements Initializable {
     private void HideErrorMessage() {
         errorMessage.setText("ErrorMessage");
         errorMessage.setVisible(false);
+        editErrorMessage.setText("ErrorMessage");
+        editErrorMessage.setVisible(false);
     }
 
     @Override
