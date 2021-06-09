@@ -1,11 +1,15 @@
 package CSAA.CSAA;
 
 
+import javassist.NotFoundException;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService implements IReservationService {
@@ -16,7 +20,7 @@ public class ReservationService implements IReservationService {
         assert reservations != null;
         for (Reservation res :
                 reservations) {
-            if(res.time.equals("")){
+            if (res.time.equals("")) {
                 res.time = TimeIndex.getByIndex(res.timeIndex);
             }
         }
@@ -26,11 +30,11 @@ public class ReservationService implements IReservationService {
     @Override
     public Reservation findById(Long id) {
         try {
-            return DataSourceConfig.getReservation(id);
+            var reservation = DataSourceConfig.getReservation(id);
+            return reservation;
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw new RuntimeException("Reservation was not found!");
         }
-        return null;
     }
 
     @Override
@@ -42,37 +46,46 @@ public class ReservationService implements IReservationService {
 
     private void CheckTimeAvaiability(ReservationDTO reservationDTO) {
         var allReservations = findAll();
-        var cantBook = allReservations.stream().filter(x -> (x.date.equals(reservationDTO.date)) && (x.timeIndex == reservationDTO.timeIndex)).count() > 1;
+        var reservationsWithSameDateTime = allReservations.stream().filter(x -> (x.date.toString().equals(reservationDTO.date)) && (x.timeIndex == reservationDTO.time)).collect(Collectors.toList());
+        var moreThanOneReservations = reservationsWithSameDateTime.size() >= 2;
+        boolean sameRes = false;
+        for (var Res :
+                reservationsWithSameDateTime) {
+            if (Res.getId() == reservationDTO.getId()) {
+                sameRes = true;
+                break;
+            }
+        }
 
-        if(cantBook){
+        if (moreThanOneReservations && !sameRes) {
             throw new RuntimeException("ReservationService/save - This datetime is full.");
         }
     }
 
     @Override
-    public Reservation update(ReservationDTO reservationDTO) {
+    public Reservation update(ReservationDTO reservationDTO) throws NotFoundException {
         Reservation reservationInDb = null;
 
         try {
             CheckTimeAvaiability(reservationDTO);
             reservationInDb = DataSourceConfig.getReservation(reservationDTO.getId());
-            if(reservationInDb != null){
-
-                reservationInDb = ParseDtoToEntity(reservationDTO);
-                return DataSourceConfig.updateReservation(reservationInDb);
+            reservationInDb = ParseDtoToEntity(reservationDTO);
+            return DataSourceConfig.updateReservation(reservationInDb);
+        } catch (Exception exception) {
+            if (exception.getClass().equals(SQLException.class)){
+                throw new NotFoundException("Reservation was not found!");
             }
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+            else{
+                throw new RuntimeException("Reservation was not modified!");
+            }
         }
-
-        return reservationInDb;
     }
 
     @Override
     public void deleteById(Long id) {
         try {
             var reservation = DataSourceConfig.getReservation(id);
-            if(reservation != null){
+            if (reservation != null) {
                 DataSourceConfig.deleteReservation(reservation);
             }
         } catch (SQLException exception) {
@@ -80,20 +93,30 @@ public class ReservationService implements IReservationService {
         }
     }
 
-    private static Reservation ParseDtoToEntity(ReservationDTO reservationDTO){
+    private static Reservation ParseDtoToEntity(ReservationDTO reservationDTO) {
 
-        Date parsedDate = craeteDateFromString(reservationDTO.date);
+        Date parsedDate = CreateDateFromString(reservationDTO.date);
+
+        int parsedTime = GetRightTimeIndex(reservationDTO);
 
         return new Reservation(
-                reservationDTO.getId(),
+                reservationDTO.getId() == null ? 0 : reservationDTO.getId(),
                 reservationDTO.name,
                 reservationDTO.phone,
                 reservationDTO.spz,
                 parsedDate,
-                reservationDTO.time);
+                parsedTime);
     }
 
-    private static Date craeteDateFromString(String dateToParse) {
+    private static int GetRightTimeIndex(ReservationDTO reservationDTO) {
+        if (reservationDTO.time == 0 && reservationDTO.timeIndex != 0) {
+            return reservationDTO.timeIndex;
+        } else {
+            return reservationDTO.time;
+        }
+    }
+
+    private static Date CreateDateFromString(String dateToParse) {
         Date parsedDate = null;
         try {
             parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateToParse);
@@ -102,7 +125,6 @@ public class ReservationService implements IReservationService {
         }
         return parsedDate;
     }
-
 
 
 //    private ArrayList<Integer> getFreeTimes(Date date){

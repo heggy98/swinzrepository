@@ -165,6 +165,7 @@ export default class ReservationList extends Component {
         axios.put("http://localhost:8080/reservations", reservation)
             .then(response => {
                 if (response.data != null) {
+                    debugger;
                     this.setState({"show": true});
                     this.setState(this.initialState);
                     this.getTimeIndexes();

@@ -1,0 +1,91 @@
+@startuml
+
+Main --> Constants
+ReservationController --> ReservationProvider
+ReservationController --> ReservationDTO
+ReservationProvider --> Reservation
+ReservationProvider --> ReservationDTO
+ReservationProvider --> TimeIndex
+ReservationProvider --> Database_Access
+
+class CsaaApplication{
++ void main(String[] args)
+}
+
+class ReservationResource {
+- ReservationService reservationService;
++ ResponseEntity<Collection<Reservation>> findAll()
++ ResponseEntity<Object> findById(@PathVariable Long id)
++ ResponseEntity<Object> save(@RequestBody ReservationDTO reservationDTO)
++ ResponseEntity<Object> update(@RequestBody ReservationDTO reservationDTO)
++ ResponseEntity<Object> deleteById(@PathVariable Long id)
+}
+
+class ReservationDTO {
+- int id;
+- String name;
+- String phone;
+- String spz;
+- int timeIndex;
+- String date;
+- int time
+
+ctors()
+getters / setters()
+}
+
+class Reservation {
+- int id;
+- String name;
+- String phone;
+- String spz;
+- int timeIndex;
+- String time;
+- Date date;
+
+ctors()
+getters / setters()
+}
+
+class ReservationService{
++ Collection<Reservation> findAll()
++ Reservation findById(Long id)
++ Reservation update(ReservationDTO reservationDTO)
++ Reservation save(ReservationDTO reservationDTO)
++ void deleteById(Long id)
+- void CheckTimeAvaiability(ReservationDTO reservationDTO)
+- Reservation ParseDtoToEntity(ReservationDTO reservationDTO)
+- int GetRightTimeIndex(ReservationDTO reservationDTO)
+- Date CreateDateFromString(String dateToParse)
+}
+
+interface IReservationService {
+    Collection<Reservation> findAll();
+
+    Reservation findById(Long id);
+
+    Reservation save(ReservationDTO reservationDTO);
+
+    Reservation update(ReservationDTO reservationDTO) throws NotFoundException;
+
+    void deleteById(Long id);
+}
+
+
+class TimeIndex{
++ Map<Integer, String> hours;
++ int GetIndex(String value)
+}
+
+class DataSourceConfig{
++ Connection ConnectDb()
++ ObservableList<Reservation> getReservations()
++ Reservation getReservation(int id)
++ updateReservation(Reservation reservation)
++ void AddNewReservation(Reservation reservation)
+}
+
+
+
+
+@enduml
