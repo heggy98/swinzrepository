@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Container, Row, Col} from "react-bootstrap";
 import Reservation from "./components/Reservation"
-import ReservationList from "./components/ReservationList"
+import ReservationList from "./components/ReservationList1"
 import Welcome from "./components/Welcome";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 

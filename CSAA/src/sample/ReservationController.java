@@ -10,7 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -139,10 +142,14 @@ public class ReservationController implements Initializable {
     }
 
     @FXML
-    public void getSelectedReservation(){
+    public void getSelectedReservation() throws ParseException {
         selectedReservation = table_reservations.getSelectionModel().getSelectedItem();
-        if(selectedReservation != null){
+        var dateFromReservation = new SimpleDateFormat("yyyy-MM-dd").parse(selectedReservation.getDate());
+        if(selectedReservation != null && dateFromReservation.after(new Date())){
             tab_edit.setDisable(false);
+        }
+        else{
+            tab_edit.setDisable(true);
         }
     }
 

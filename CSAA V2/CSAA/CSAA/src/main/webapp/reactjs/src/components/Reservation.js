@@ -97,33 +97,11 @@ export default class ReservationList extends Component {
             });
     }
 
-
-
-
-
     reservationChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
-
-
-    // Function for future purposes
-    // getFreeTimeIndexesByDate() {
-    //
-    //     axios.get("http://localhost:8080/times/")
-    //         .then(response => response.data)
-    //         .then((data) => {
-    //             if (data != null) {
-    //                 this.setState({times: data});
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
-
-
 
     nameNumberCheck(event){
         var name = event.target.value;
@@ -195,8 +173,6 @@ export default class ReservationList extends Component {
     reservationList = () =>{
         return this.props.history.push("/list");
     };
-
-
 
     render() {
         const {name, phone, spz, date, time, times} = this.state;

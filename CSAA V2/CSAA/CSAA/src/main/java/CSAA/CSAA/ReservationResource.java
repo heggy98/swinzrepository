@@ -53,8 +53,9 @@ public class ReservationResource {
             return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
         }catch (NotFoundException ex){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        catch (RuntimeException ex){
+        } catch (SecurityException ex){
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        } catch (RuntimeException ex){
             return new ResponseEntity<>(null, HttpStatus.NOT_MODIFIED);
         }
     }

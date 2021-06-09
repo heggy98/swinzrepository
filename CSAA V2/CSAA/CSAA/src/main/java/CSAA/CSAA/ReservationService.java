@@ -3,11 +3,15 @@ package CSAA.CSAA;
 
 import javassist.NotFoundException;
 import org.aspectj.weaver.ast.Not;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,8 +71,16 @@ public class ReservationService implements IReservationService {
         Reservation reservationInDb = null;
 
         try {
-            CheckTimeAvaiability(reservationDTO);
             reservationInDb = DataSourceConfig.getReservation(reservationDTO.getId());
+
+            LocalDateTime now = LocalDateTime.now();
+
+
+            if(reservationInDb.getDate().before(new Date())){
+                throw new SecurityException("Gone reservation cannot be edited.");
+            }
+
+            CheckTimeAvaiability(reservationDTO);
             reservationInDb = ParseDtoToEntity(reservationDTO);
             return DataSourceConfig.updateReservation(reservationInDb);
         } catch (Exception exception) {
